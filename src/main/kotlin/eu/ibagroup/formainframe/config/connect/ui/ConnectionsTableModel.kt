@@ -8,6 +8,10 @@ import eu.ibagroup.formainframe.utils.crudable.*
 import eu.ibagroup.formainframe.utils.nullable
 import eu.ibagroup.formainframe.utils.toMutableList
 
+/**
+ * The z/OSMF Connections table in File -> Settings -> Other Settings -> For Mainframe
+ * It seems that CrudableListBuilder is used as Crudable later in the code
+ */
 class ConnectionsTableModel(
   crudable: Crudable
 ) : CrudableTableModel<ConnectionDialogState>(
@@ -17,12 +21,18 @@ class ConnectionsTableModel(
   ConnectionUsernameColumn()
 ) {
 
+  /**
+   * gets all rows
+   */
   override fun fetch(crudable: Crudable): MutableList<ConnectionDialogState> {
     return crudable.getAll<ConnectionConfig>().map {
       it.toDialogState(crudable)
     }.toMutableList()
   }
 
+  /**
+   * updates table
+   */
   override fun onUpdate(crudable: Crudable, value: ConnectionDialogState): Boolean {
     return with(crudable) {
       val oldUrlConnection = crudable.getByUniqueKey<UrlConnection>(value.urlConnectionUuid)
@@ -41,6 +51,9 @@ class ConnectionsTableModel(
     }
   }
 
+  /**
+   * deletes row
+   */
   override fun onDelete(crudable: Crudable, value: ConnectionDialogState) {
     with(crudable) {
       delete(value.credentials)
@@ -55,6 +68,9 @@ class ConnectionsTableModel(
     }
   }
 
+  /**
+   * adds row
+   */
   override fun onAdd(crudable: Crudable, value: ConnectionDialogState): Boolean {
     return with(crudable) {
       val alreadyDefinedZOSMFUrlConnection = crudable.find<UrlConnection> {
@@ -74,6 +90,9 @@ class ConnectionsTableModel(
     }
   }
 
+  /**
+   * NOT SURE WHAT IT DOES
+   */
   override fun onApplyingMergedCollection(crudable: Crudable, merged: MergedCollections<ConnectionDialogState>) {
     listOf(
       Pair(Credentials::class.java, ConnectionDialogState::credentials),
@@ -90,11 +109,17 @@ class ConnectionsTableModel(
     }
   }
 
+  /**
+   * adds / edits DS Mask or USS Path
+   */
   override fun set(row: Int, item: ConnectionDialogState) {
     get(row).isAllowSsl = item.isAllowSsl
     get(row).password = item.password
     super.set(row, item)
   }
 
+  /**
+   * NOT SURE WHAT THIS IS SUPPOSED TO BE
+   */
   override val clazz = ConnectionDialogState::class.java
 }

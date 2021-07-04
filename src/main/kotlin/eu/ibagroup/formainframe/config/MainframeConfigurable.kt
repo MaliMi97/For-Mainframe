@@ -5,6 +5,9 @@ import com.intellij.openapi.options.TabbedConfigurable
 import eu.ibagroup.formainframe.config.connect.ui.ConnectionConfigurable
 import eu.ibagroup.formainframe.config.ws.ui.WSConfigurable
 
+/**
+ * creates the For Mainframe setting in File -> Settings -> Other Settings
+ */
 class MainframeConfigurable : TabbedConfigurable() {
 
   var preferredConfigurableClass: Class<*>? = null
@@ -18,8 +21,8 @@ class MainframeConfigurable : TabbedConfigurable() {
 
   override fun createConfigurables(): MutableList<Configurable> {
     return mutableListOf(
-      WSConfigurable().also { wsConfigurable = it },
-      ConnectionConfigurable().also { connectionConfigurable = it }
+      ConnectionConfigurable().also { connectionConfigurable = it },
+      WSConfigurable().also { wsConfigurable = it }
     )
   }
 

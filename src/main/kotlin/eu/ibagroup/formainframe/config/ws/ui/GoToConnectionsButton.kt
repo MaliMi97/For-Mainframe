@@ -10,6 +10,9 @@ import eu.ibagroup.formainframe.common.ui.getColumnIndexByName
 import eu.ibagroup.formainframe.config.ws.WorkingSetConfig
 import java.util.function.Supplier
 
+/**
+ * not used code
+ */
 fun goToConnectionsButton(
   table: TableView<WorkingSetConfig>?,
   wsTableModel: WSTableModel

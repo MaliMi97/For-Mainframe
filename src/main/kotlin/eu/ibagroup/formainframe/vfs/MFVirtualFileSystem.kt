@@ -4,6 +4,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vfs.VirtualFileManager
 import eu.ibagroup.formainframe.dataops.DataOpsManager
+import kotlin.IllegalStateException
 
 class MFVirtualFileSystem : VirtualFileSystemModelWrapper<MFVirtualFile, MFVirtualFileSystemModel>(
   MFVirtualFile::class.java,
@@ -18,7 +19,8 @@ class MFVirtualFileSystem : VirtualFileSystemModelWrapper<MFVirtualFile, MFVirtu
 
     @JvmStatic
     val instance: MFVirtualFileSystem
-      get() = VirtualFileManager.getInstance().getFileSystem(PROTOCOL) as MFVirtualFileSystem
+      get() = VirtualFileManager.getInstance().getFileSystem(PROTOCOL)
+        .let { if (it == null) throw IllegalStateException("MFVirtualFileSystem instance is null") else return it as MFVirtualFileSystem }
 
     @JvmStatic
     val model

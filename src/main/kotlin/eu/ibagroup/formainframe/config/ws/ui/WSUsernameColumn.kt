@@ -12,10 +12,16 @@ class WSUsernameColumn(
   private val getUsername: (WorkingSetConfig) -> String?
 ) : ColumnInfo<WorkingSetConfig, String>(message("configurable.ws.tables.ws.username.name")) {
 
+  /**
+   * returns the name of the column
+   */
   override fun valueOf(item: WorkingSetConfig): String {
     return getUsername(item) ?: NO_USERNAME_MESSAGE
   }
 
+  /**
+   * not used code
+   */
   override fun getRenderer(item: WorkingSetConfig): TableCellRenderer {
     return ErrorableTableCellRenderer(
       errorMessage = message("configurable.ws.tables.ws.url.error.empty.tooltip")
@@ -24,10 +30,16 @@ class WSUsernameColumn(
     }
   }
 
+  /**
+   * not used code
+   */
   override fun isCellEditable(item: WorkingSetConfig?): Boolean {
     return false
   }
 
+  /**
+   * not used code
+   */
   override fun getTooltipText(): String {
     return message("configurable.ws.tables.ws.username.tooltip")
   }

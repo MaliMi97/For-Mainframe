@@ -17,8 +17,14 @@ import eu.ibagroup.formainframe.config.ws.WorkingSetConfig
 import eu.ibagroup.formainframe.utils.crudable.getAll
 import eu.ibagroup.formainframe.utils.isThe
 
+/**
+ * not used code
+ */
 fun noConnectionsInSandbox() = sandboxCrudable.getAll<ConnectionConfig>().count() == 0L
 
+/**
+ * class that is used to create the Working Sets "folder" in File -> Settings -> Other Settings -> For Mainframe
+ */
 class WSConfigurable(
 ) : BoundSearchableConfigurable("Working Sets", "mainframe") {
 
@@ -44,7 +50,11 @@ class WSConfigurable(
   }
 
 
-
+  /**
+   * creates the panel along with add and edit functions and disables up/down function
+   * NOT SURE why disposable is not null
+   * NOT SURE what ApplicationManager.getApplication(). ... does
+   */
   override fun createPanel(): DialogPanel {
     val wsTableModel = WSTableModel(sandboxCrudable)
     val wsTable = ValidatingTableView(wsTableModel, disposable!!).apply {
@@ -105,6 +115,9 @@ class WSConfigurable(
     }
   }
 
+  /**
+   * the apply button uses this function
+   */
   override fun apply() {
     val wasModified = isModified
     applySandbox<WorkingSetConfig>()
