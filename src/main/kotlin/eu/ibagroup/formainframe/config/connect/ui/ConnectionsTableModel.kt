@@ -32,6 +32,8 @@ class ConnectionsTableModel(
 
   /**
    * updates table
+   * is called when setting up the table
+   * is not called when using onAdd or onDelete
    */
   override fun onUpdate(crudable: Crudable, value: ConnectionDialogState): Boolean {
     return with(crudable) {
@@ -110,7 +112,7 @@ class ConnectionsTableModel(
   }
 
   /**
-   * adds / edits DS Mask or USS Path
+   * edits Connection
    */
   override fun set(row: Int, item: ConnectionDialogState) {
     get(row).isAllowSsl = item.isAllowSsl

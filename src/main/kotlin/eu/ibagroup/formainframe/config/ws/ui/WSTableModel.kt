@@ -11,6 +11,7 @@ import eu.ibagroup.formainframe.utils.toMutableList
  * Table of Working Sets showing their names, the names  of their connections, usernames and z/OSMF url
  * Located in File -> Settings -> Other Settings -> For Mainframe -> Working Sets
  * It seems that CrudableListBuilder is used as Crudable later in the code
+ * Why are we using in onAdd, onDelete, etc. WorkingSetConfig and not WorkingSetDialogState?
  */
 class WSTableModel(
   crudable: Crudable,
