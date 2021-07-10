@@ -6,13 +6,14 @@ import com.intellij.openapi.util.Disposer
 import eu.ibagroup.formainframe.config.ConfigSandboxImpl
 import eu.ibagroup.formainframe.config.connect.ConnectionConfig
 import eu.ibagroup.formainframe.utils.crudable.nextUniqueValue
+import io.mockk.spyk
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
 internal class ConnectionsTableModelTest {
 
-    val app = MockApplication(Disposer.newDisposable(""))
+    val app = spyk(MockApplication(Disposer.newDisposable("")))
     val sandbox = ConfigSandboxImpl()
     val tab = ConnectionsTableModel(sandbox.crudable)
     val state = ConnectionDialogState(connectionName = "a", connectionUrl = "https://a.com", username = "a", password = "a")

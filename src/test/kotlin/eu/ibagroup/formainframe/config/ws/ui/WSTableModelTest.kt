@@ -9,6 +9,7 @@ import eu.ibagroup.formainframe.config.connect.ui.ConnectionsTableModel
 import eu.ibagroup.formainframe.config.ws.DSMask
 import eu.ibagroup.formainframe.config.ws.UssPath
 import eu.ibagroup.formainframe.config.ws.WorkingSetConfig
+import io.mockk.spyk
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -16,7 +17,7 @@ import org.junit.jupiter.api.Assertions.assertTrue
 
 internal class WSTableModelTest {
 
-    val app = MockApplication(Disposer.newDisposable(""))
+    val app = spyk(MockApplication(Disposer.newDisposable("")))
     val sandbox = ConfigSandboxImpl()
     val tab = WSTableModel(sandbox.crudable)
     // NOTE: Should I be able tp create WorkingSetConfig without checking whether the connectionConfigUuid already exists?
