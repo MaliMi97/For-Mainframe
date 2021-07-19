@@ -12,11 +12,17 @@ import eu.ibagroup.formainframe.utils.crudable.ReloadableEventHandler
 import eu.ibagroup.formainframe.utils.crudable.getAll
 import kotlin.streams.toList
 
+/**
+ * contains lists of connections, urls, working sets and credentials
+ */
 data class SandboxState(
   val configState: ConfigState = ConfigState(),
   val credentials: MutableList<Credentials> = mutableListOf()
 )
 
+/**
+ * implementation of ConfigSandbox interface
+ */
 class ConfigSandboxImpl : ConfigSandbox {
 
   private var state = SandboxState()

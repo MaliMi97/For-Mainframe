@@ -18,6 +18,10 @@ interface ExplorerListener {
 @JvmField
 val UNITS_CHANGED = Topic.create("unitsChanged", ExplorerListener::class.java)
 
+/**
+ * an interface for an extension point
+ * the intelliJ explorer
+ */
 interface Explorer {
 
   companion object {
@@ -26,14 +30,28 @@ interface Explorer {
       get() = ApplicationManager.getApplication().getService(Explorer::class.java)
   }
 
+  /**
+   * collection of units (WorkingSets)
+   */
   val units: Collection<ExplorerUnit>
 
+  /**
+   * disposes/deletes unit (WorkingSet)
+   */
   fun disposeUnit(unit: ExplorerUnit)
 
+  /**
+   * checks whether unit is of necessary type (for now only WorkingSets) and whether units contain it
+   */
   fun isUnitPresented(unit: ExplorerUnit): Boolean
 
   val componentManager: ComponentManager
 
+  /**
+   * is componentManager (the Application in case of GlobalExplorer) cased as Project, if the componentManager is not null
+   *
+   * is null otherwise
+   */
   val nullableProject: Project?
     get() = componentManager.castOrNull()
 

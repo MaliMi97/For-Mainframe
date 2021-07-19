@@ -7,6 +7,7 @@ import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.util.Disposer
+import com.intellij.testFramework.TestActionEvent
 import com.intellij.util.containers.isEmpty
 import eu.ibagroup.formainframe.config.ConfigService
 import eu.ibagroup.formainframe.config.ConfigServiceImpl
@@ -68,12 +69,9 @@ internal class AddWorkingSetActionTest{
         val impl = ConfigServiceImpl()
         val conFig = ConnectionConfig(name = "a", uuid = "aa", urlConnectionUuid = "aaa")
         impl.crudable.add(conFig)
-        mockkStatic("eu.ibagroup.formainframe.utils.crudable.CrudableKt")
-        every { configCrudable.getAll<ConnectionConfig>() } returns impl.crudable.getAll<ConnectionConfig>()
-        every { configCrudable.nextUniqueValue<WorkingSetConfig, String>() } returns
-                impl.crudable.nextUniqueValue<WorkingSetConfig, String>()
-        action.actionPerformed(e)
+        every { configCrudable } returns impl.crudable
 
+        action.actionPerformed(e)
     }
 
     @Test

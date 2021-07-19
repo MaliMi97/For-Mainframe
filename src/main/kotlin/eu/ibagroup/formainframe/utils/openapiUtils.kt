@@ -19,23 +19,37 @@ import kotlin.concurrent.withLock
 
 class Dummy private constructor()
 
+/**
+ * returns IdeaPluginDescriptor of enabled plugin by class.java
+ *
+ * returns null if no such plugin is enabled
+ */
 fun PluginManager.getPluginDescriptorByClass(clazz: Class<*>): IdeaPluginDescriptor? {
   return getPluginOrPlatformByClassName(clazz.name)?.let {
     findEnabledPlugin(it)
   }
 }
 
+/**
+ * not used code
+ */
 val forMainframePluginDescriptor by lazy {
   PluginManager.getInstance().getPluginDescriptorByClass(Dummy::class.java)
     ?: throw IllegalStateException("Dummy class wasn't loaded by For Mainframe plugin's class loader for some reason")
 }
 
+/**
+ * NOT SURE, the path is to a directory
+ */
 val cachesDir by lazy {
   val cachesDirString = System.getProperty("caches_dir")
   val cachesDir = File(cachesDirString ?: PathManager.getSystemPath() + "/caches/")
   return@lazy cachesDir
 }
 
+/**
+ * NOT SURE
+ */
 fun <L> sendTopic(
   topic: Topic<L>,
   componentManager: ComponentManager = ApplicationManager.getApplication()
@@ -43,6 +57,11 @@ fun <L> sendTopic(
   return componentManager.messageBus.syncPublisher(topic)
 }
 
+/**
+ * creates new connection to the componentManager's messageBus and subscribes the handler to the target endpoint (topic)
+ *
+ * the connection is released when disposable's parent is collected
+ */
 fun <L : Any> subscribe(
   componentManager: ComponentManager,
   topic: Topic<L>,
@@ -53,6 +72,11 @@ fun <L : Any> subscribe(
   .connect(disposable)
   .subscribe(topic, handler)
 
+/**
+ * creates new connection and subscribes the handler to the target endpoint (topic)
+ *
+ * the connection is disconnected on message bus dispose, or on explicit dispose
+ */
 fun <L : Any> subscribe(
   componentManager: ComponentManager,
   topic: Topic<L>,
@@ -62,25 +86,46 @@ fun <L : Any> subscribe(
   .connect()
   .subscribe(topic, handler)
 
+/**
+ * not used code
+ */
 fun <L : Any> subscribe(topic: Topic<L>, handler: L) = ApplicationManager.getApplication()
   .messageBus
   .connect()
   .subscribe(topic, handler)
 
+/**
+ * creates new connection to the Application's messageBus and subscribes the handler to the target endpoint (topic)
+ *
+ * the connection is released when disposable's parent is collected
+ */
 fun <L : Any> subscribe(topic: Topic<L>, disposable: Disposable, handler: L) = ApplicationManager.getApplication()
   .messageBus
   .connect(disposable)
   .subscribe(topic, handler)
 
+/**
+ * not used code
+ */
 fun assertReadAllowed() = ApplicationManager.getApplication().assertReadAccessAllowed()
 
+/**
+ * assert whether the Application's write access is allowed
+ */
 fun assertWriteAllowed() = ApplicationManager.getApplication().assertWriteAccessAllowed()
 
+/**
+ * creates a write-thread-based executor with no modal dialogs, submits/schedules the block to the executor and returns
+ * the result of the block
+ */
 fun <T> submitOnWriteThread(block: () -> T): T {
   @Suppress("UnstableApiUsage")
   return AppUIExecutor.onWriteThread(ModalityState.NON_MODAL).submit(block).get()
 }
 
+/**
+ * basically it executes the block as writeAction
+ */
 @Suppress("UnstableApiUsage")
 inline fun <T> runWriteActionOnWriteThread(crossinline block: () -> T): T {
   val app = ApplicationManager.getApplication()
@@ -96,10 +141,16 @@ inline fun <T> runWriteActionOnWriteThread(crossinline block: () -> T): T {
     }
 }
 
+/**
+ * NOT SURE
+ */
 inline fun <T> runReadActionInEdtAndWait(crossinline block: () -> T): T {
   return invokeAndWaitIfNeeded { runReadAction(block)}
 }
 
+/**
+ * not used code
+ */
 fun AlreadyDisposedException(clazz: Class<*>) = AlreadyDisposedException("${clazz.name} is already disposed")
 
 inline fun <reified S : Any> ComponentManager.service(): S {
@@ -110,6 +161,9 @@ inline fun <reified S : Any> ComponentManager.component(): S {
   return getComponent(S::class.java)
 }
 
+/**
+ * not used code
+ */
 inline fun <T> runPromiseAsBackgroundTask(
   title: String,
   project: Project? = null,
@@ -139,7 +193,15 @@ inline fun <T> runPromiseAsBackgroundTask(
 }
 
 
-
+/**
+ * NOT SURE
+ *
+ * wakes up all waiting threats, the current threat waits for result of the promise
+ *
+ * returns this on success
+ *
+ * throws failure on error
+ */
 fun <T> Promise<T>.get(): T? {
   return if (this is AsyncPromise<T>) {
     get()
@@ -171,6 +233,9 @@ fun <T> Promise<T>.get(): T? {
   }
 }
 
+/**
+ * NOT SURE
+ */
 inline fun <reified T> runTask(
   @Nls(capitalization = Nls.Capitalization.Sentence) title: String,
   project: Project? = null,
@@ -184,10 +249,16 @@ inline fun <reified T> runTask(
   })
 }
 
+/**
+ * not used code
+ */
 inline fun <reified S : Any> ComponentManager.hasService(): Boolean {
   return picoContainer.getComponentInstance(S::class.java.name) != null
 }
 
+/**
+ * NOT SURE
+ */
 inline fun runWriteActionInEdt(crossinline block: () -> Unit) {
   runInEdt {
     runWriteAction(block)

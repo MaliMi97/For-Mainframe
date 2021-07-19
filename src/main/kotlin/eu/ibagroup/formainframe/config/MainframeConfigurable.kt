@@ -16,9 +16,19 @@ class MainframeConfigurable : TabbedConfigurable() {
     return "For Mainframe"
   }
 
+  /**
+   * connections
+   */
   private lateinit var connectionConfigurable: ConnectionConfigurable
+
+  /**
+   * work sets
+   */
   private lateinit var wsConfigurable: WSConfigurable
 
+  /**
+   * creates tabs for connections and work sets
+   */
   override fun createConfigurables(): MutableList<Configurable> {
     return mutableListOf(
       ConnectionConfigurable().also { connectionConfigurable = it },

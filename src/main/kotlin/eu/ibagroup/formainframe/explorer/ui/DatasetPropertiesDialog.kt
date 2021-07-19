@@ -12,6 +12,11 @@ import eu.ibagroup.formainframe.dataops.attributes.RemoteDatasetAttributes
 import eu.ibagroup.r2z.HasMigrated
 import javax.swing.JComponent
 
+/**
+ * dialog for properties of a dataset
+ *
+ * available when right clicking on the name of the dataset
+ */
 class DatasetPropertiesDialog(val project: Project?, override var state: DatasetState) : DialogWrapper(project), StatefulComponent<DatasetState> {
   init {
     title = "Dataset Properties"

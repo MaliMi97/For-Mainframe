@@ -21,6 +21,9 @@ abstract class TaskPromiseInvoker<R> : PromiseInvoker<R> {
 
 }
 
+/**
+ * not used code
+ */
 fun <R> Invoker.asPromiseInvoker(progressIndicator: ProgressIndicator, later: Boolean = false): PromiseInvoker<R> {
   return object : PromiseInvoker<R> {
     override fun invoke(computation: Computation<R>): Promise<R> {
@@ -33,6 +36,9 @@ fun <R> Invoker.asPromiseInvoker(progressIndicator: ProgressIndicator, later: Bo
   }
 }
 
+/**
+ * not used code
+ */
 class BackgroundTaskPromiseInvoker<R>(
   private val title: String,
   private val project: Project? = null,

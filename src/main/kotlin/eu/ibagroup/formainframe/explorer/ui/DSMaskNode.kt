@@ -12,6 +12,9 @@ import eu.ibagroup.formainframe.dataops.UnitRemoteQueryImpl
 import eu.ibagroup.formainframe.explorer.WorkingSet
 import eu.ibagroup.formainframe.vfs.MFVirtualFile
 
+/**
+ * Node for dataset mask of a work set
+ */
 class DSMaskNode(
   dsMask: DSMask,
   project: Project,
@@ -28,6 +31,12 @@ class DSMaskNode(
     presentation.setIcon(AllIcons.Nodes.Module)
   }
 
+  /**
+   * returns UnitRemoteQueryImpl(dsMask, workingset.connectionConfig, workingset.urlConnection) if
+   * connectionConfig and urlConnection exist
+   *
+   * else returns null
+   */
   override val query: RemoteQuery<DSMask, Unit>?
     get() {
       val connectionConfig = unit.connectionConfig
@@ -37,6 +46,9 @@ class DSMaskNode(
       } else null
     }
 
+  /**
+   *
+   */
   override fun Collection<MFVirtualFile>.toChildrenNodes(): MutableList<AbstractTreeNode<*>> {
     return map {
       if (it.isDirectory) {

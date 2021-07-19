@@ -3,6 +3,10 @@ package eu.ibagroup.formainframe.utils
 import java.util.*
 import kotlin.reflect.KProperty
 
+/**
+ * only used in ResettableLazy class which is used in one function which is not used
+ * not used code
+ */
 class LazyManager {
   private val managedDelegates = LinkedList<Resettable>()
 
@@ -24,6 +28,10 @@ interface Resettable {
   fun reset()
 }
 
+/**
+ * only used in one function which is not used
+ * not used code
+ */
 class ResettableLazy<E>(private val manager: LazyManager, val init: () -> E) : Resettable {
   @Volatile
   var lazyHolder = makeInitBlock()
@@ -44,6 +52,9 @@ class ResettableLazy<E>(private val manager: LazyManager, val init: () -> E) : R
   }
 }
 
+/**
+ * not used code
+ */
 fun <E> resettableLazy(manager: LazyManager, init: () -> E): ResettableLazy<E> {
   return ResettableLazy(manager, init)
 }

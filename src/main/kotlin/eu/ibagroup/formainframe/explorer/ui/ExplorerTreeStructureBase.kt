@@ -11,12 +11,24 @@ abstract class ExplorerTreeStructureBase(
   protected val project: Project
 ) : AbstractTreeStructureBase(project), ExplorerViewSettings {
 
+  /**
+   * registers node to the tree structure
+   */
   abstract fun registerNode(node: ExplorerTreeNode<*>)
 
+  /**
+   * finds data set by value
+   */
   abstract fun <V : Any> findByValue(value: V): Collection<ExplorerTreeNode<V>>
 
+  /**
+   * returns a list of data sets matching predicate
+   */
   abstract fun findByPredicate(predicate: (ExplorerTreeNode<*>) -> Boolean): Collection<ExplorerTreeNode<*>>
 
+  /**
+   * finds file
+   */
   abstract fun findByVirtualFile(file: VirtualFile): Collection<ExplorerTreeNode<*>>
 
 }

@@ -16,6 +16,9 @@ class FileExplorerTreeNodeRoot(explorer: Explorer, project: Project, treeStructu
   override fun update(presentation: PresentationData) {
   }
 
+  /**
+   * returns all working set nodes as MutableList
+   */
   override fun getChildren(): MutableCollection<out AbstractTreeNode<*>> {
     return explorer.units.filterIsInstance<WorkingSet>()
       .map { WorkingSetNode(it, notNullProject, this, treeStructure) }.toMutableList()

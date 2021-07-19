@@ -43,12 +43,13 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
   implementation("org.jgrapht:jgrapht-core:1.5.0")
   implementation("eu.ibagroup:r2z:1.0.2")
-//  implementation("io.mockk:mockk:1.10.2")
+  implementation("io.mockk:mockk:1.10.2")
+  implementation("org.mock-server:mockserver-netty:5.11.1")
   testImplementation("junit", "junit", "4.12")
 }
 
 intellij {
-  version = "2020.3"
+  version = "2021.1.3"
 }
 
 

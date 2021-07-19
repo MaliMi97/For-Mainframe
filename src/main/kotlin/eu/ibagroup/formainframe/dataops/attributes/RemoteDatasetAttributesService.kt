@@ -10,6 +10,10 @@ import eu.ibagroup.r2z.Dataset
 const val MIGRATED = "Migrated"
 const val DATASETS_SUBFOLDER_NAME = "Data Sets"
 
+/**
+ * class extending attributeService extension points
+ * builds RemoteDatasetAttributeService
+ */
 class RemoteDatasetAttributesServiceFactory : AttributesServiceFactory {
   override fun buildComponent(dataOpsManager: DataOpsManager): AttributesService<*, *> {
     return RemoteDatasetAttributesService(dataOpsManager)

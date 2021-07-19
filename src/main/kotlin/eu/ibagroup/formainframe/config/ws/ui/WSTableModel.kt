@@ -62,7 +62,7 @@ class WSTableModel(
   }
 
   /**
-   * NOT SURE WHAT THIS IS SUPPOSED TO BE
+   * NOT SURE WHAT THIS IS FOR
    */
   override val clazz = WorkingSetConfig::class.java
 

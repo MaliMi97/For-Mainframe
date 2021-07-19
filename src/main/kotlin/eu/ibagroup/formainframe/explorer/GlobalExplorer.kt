@@ -36,6 +36,9 @@ const val EXPLORER_NOTIFICATION_GROUP_ID = "eu.ibagroup.formainframe.explorer.Ex
 
 class GlobalExplorer : Explorer {
 
+  /**
+   * turns WorkingSetConfig to GlobalWorkingSet
+   */
   private fun WorkingSetConfig.toGlobalWs(parentDisposable: Disposable): GlobalWorkingSet {
     return GlobalWorkingSet(
       uuid = uuid,
@@ -54,6 +57,9 @@ class GlobalExplorer : Explorer {
     lock = lock
   )
 
+  /**
+   * disposes/deletes the unit
+   */
   override fun disposeUnit(unit: ExplorerUnit) {
     configCrudable.getByUniqueKey<WorkingSetConfig>(unit.uuid)?.let {
       configCrudable.delete(it)
@@ -64,6 +70,9 @@ class GlobalExplorer : Explorer {
     return unit is GlobalWorkingSet && units.contains(unit)
   }
 
+  /**
+   * The application on which the entire plugin runs
+   */
   override val componentManager: Application
     get() = ApplicationManager.getApplication()
 

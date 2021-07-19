@@ -13,6 +13,9 @@ import eu.ibagroup.formainframe.utils.validation.validateUssMask
 import eu.ibagroup.formainframe.utils.validation.validateWorkingSetMaskName
 import javax.swing.JComponent
 
+/**
+ * dialog for adding masks to work sets
+ */
 class AddMaskDialog(project: Project?, override var state: MaskState) : DialogWrapper(project),
   StatefulComponent<MaskState> {
 

@@ -20,6 +20,11 @@ class GlobalExplorerContent : ExplorerContent(
     return lock.withLock { filesToCut.contains(virtualFile) }
   }
 
+  /**
+   * returns GlobalFileExplorerView
+   *
+   * and NOT SURE
+   */
   override fun buildContent(parentDisposable: Disposable, project: Project): JComponent {
     return GlobalFileExplorerView(globalExplorer, project, parentDisposable) {
       lock.withLock {
