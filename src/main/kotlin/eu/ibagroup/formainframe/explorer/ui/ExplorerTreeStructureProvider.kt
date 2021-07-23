@@ -7,6 +7,12 @@ import eu.ibagroup.formainframe.explorer.ExplorerViewSettings
 
 abstract class ExplorerTreeStructureProvider : TreeStructureProvider {
 
+  /**
+   * returns modifyOurs(parent, castedChildren, settings) if parent node and all the children nodes are ExplorerTreeNodes.
+   * In case of FileExplorerTreeStructureProvider it returns children as MutableList
+   *
+   * else returns children
+   */
   override fun modify(
     parent: AbstractTreeNode<*>,
     children: MutableCollection<AbstractTreeNode<*>>,

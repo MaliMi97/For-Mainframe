@@ -14,6 +14,9 @@ fun interface CutBufferListener {
   fun onUpdate(previousBufferState: List<VirtualFile>, currentBufferState: List<VirtualFile>)
 }
 
+/**
+ * serviceInterface for applicationService extension point
+ */
 abstract class ExplorerContent(
   actionGroup: ActionGroup,
   place: String
@@ -30,6 +33,9 @@ abstract class ExplorerContent(
 
   protected abstract fun buildContent(parentDisposable: Disposable, project: Project): JComponent
 
+  /**
+   * returns vertical borderless SimpleToolWindowPanel containing actions
+   */
   fun buildComponent(parentDisposable: Disposable, project: Project): JComponent {
     return object : SimpleToolWindowPanel(true, true), Disposable {
 

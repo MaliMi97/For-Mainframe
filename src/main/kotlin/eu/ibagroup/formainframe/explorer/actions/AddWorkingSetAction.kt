@@ -15,9 +15,14 @@ import eu.ibagroup.formainframe.config.ws.ui.WorkingSetDialogState
 import eu.ibagroup.formainframe.config.ws.ui.initEmptyUuids
 import eu.ibagroup.formainframe.explorer.ui.FILE_EXPLORER_VIEW
 import eu.ibagroup.formainframe.utils.crudable.getAll
-
+/**
+ * the + sign in For Mainframe explorer
+ */
 class AddWorkingSetAction : AnAction() {
-
+  /**
+   * shows the dialog which is used to create working set
+   * shows the connection dialog if there are no known connections
+   */
   override fun actionPerformed(e: AnActionEvent) {
     if (configCrudable.getAll<ConnectionConfig>().isEmpty()) {
       val state = ConnectionDialog.showAndTestConnection(
@@ -43,10 +48,17 @@ class AddWorkingSetAction : AnAction() {
     }
   }
 
+  /**
+   * creates the "button"
+   * button can be pressed if true is returned
+   */
   override fun isDumbAware(): Boolean {
     return true
   }
 
+  /**
+   * chooses the icon which will be visible
+   */
   override fun update(e: AnActionEvent) {
     if (e.getData(FILE_EXPLORER_VIEW) != null) {
       e.presentation.text = "Working Set"
@@ -56,5 +68,4 @@ class AddWorkingSetAction : AnAction() {
       e.presentation.icon = AllIcons.General.Add
     }
   }
-
 }

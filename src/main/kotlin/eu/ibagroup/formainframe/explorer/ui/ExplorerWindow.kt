@@ -8,6 +8,9 @@ import javax.swing.JComponent
 import javax.swing.JScrollPane
 import javax.swing.JTree
 
+/**
+ * not used code
+ */
 class ExplorerWindow(parentDisposable: Disposable) : SimpleToolWindowPanel(true, true), Disposable {
 
   private var wsTree: JTree? = null

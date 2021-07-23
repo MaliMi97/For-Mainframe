@@ -18,6 +18,9 @@ import eu.ibagroup.formainframe.utils.crudable.getAll
 import eu.ibagroup.formainframe.utils.isThe
 import eu.ibagroup.formainframe.utils.toMutableList
 
+/**
+ * class that is used to create the z/OSMF Connections "folder" in File -> Settings -> Other Settings -> For Mainframe
+ */
 @Suppress("DialogTitleCapitalization")
 class ConnectionConfigurable : BoundSearchableConfigurable("z/OSMF Connections", "mainframe") {
 

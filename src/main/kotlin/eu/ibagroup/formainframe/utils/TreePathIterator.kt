@@ -2,6 +2,9 @@ package eu.ibagroup.formainframe.utils
 
 import javax.swing.tree.TreePath
 
+/**
+ * not used code
+ */
 class TreePathIterator(private val treePath: TreePath) : Iterator<Any> {
 
   @Volatile

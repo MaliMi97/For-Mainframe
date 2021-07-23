@@ -21,6 +21,11 @@ get() = CreateFileDialogState(
   parameters = CreateUssFile(FileType.FILE, FileMode(7,7,7))
 )
 
+/**
+ * creates dialog for file creation
+ *
+ * files can be created under uss mask of a work set
+ */
 class CreateFileDialog(project: Project?, override var state: CreateFileDialogState = dummyState, filePath: String) :
   StatefulDialog<CreateFileDialogState>(project = project) {
 

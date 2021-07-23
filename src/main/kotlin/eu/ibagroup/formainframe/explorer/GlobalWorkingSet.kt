@@ -18,6 +18,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock
 import kotlin.concurrent.read
 import kotlin.concurrent.withLock
 
+/**
+ * implementation of WorkingSet
+ * By either using action AddWorkingSetAction in explorer or adding working set in the Working Set table in
+ * File -> Settings -> Other Settings -> For Mainframe, we add WorkingSetConfig to configCrudable
+ * This class uses the data from the WorkingSetConfig to create WorkingSet
+ */
 class GlobalWorkingSet(
   override val uuid: String,
   globalExplorer: GlobalExplorer,
@@ -31,6 +37,9 @@ class GlobalWorkingSet(
 
   private val isDisposed = AtomicBoolean(false)
 
+  /**
+   * returns WorkingSetConfig, if the WorkingSetConfig with the uuid exists
+   */
   private val workingSetConfig: WorkingSetConfig?
     get() = lock.withLock {
       (isDisposed.compareAndSet(false, false)).runIfTrue { workingSetConfigProvider(uuid) }
@@ -40,9 +49,15 @@ class GlobalWorkingSet(
     Disposer.register(parentDisposable, this)
   }
 
+  /**
+   * name of the WorkingSetConfig used to create the GlobalWorkingSet
+   */
   override val name
     get() = workingSetConfig?.name ?: ""
 
+  /**
+   * connectionConfig used to create the connection on which the WorkingSet is allocated
+   */
   override val connectionConfig: ConnectionConfig?
     get() = lock.withLock {
       workingSetConfig
@@ -51,12 +66,21 @@ class GlobalWorkingSet(
         }
     }
 
+  /**
+   * url of the WorkingSetConfig used to create the GlobalWorkingSet
+   */
   override val urlConnection: UrlConnection?
     get() = lock.withLock { workingSetConfig?.let { configCrudable.getByForeignKeyDeeply(it) } }
 
+  /**
+   * dsMask of the WorkingSetConfig used to create the GlobalWorkingSet
+   */
   override val dsMasks: Collection<DSMask>
     get() = lock.withLock { workingSetConfig?.dsMasks ?: listOf() }
 
+  /**
+   * adds mask to the GlobalWorkingSet
+   */
   override fun addMask(dsMask: DSMask) {
     val newWsConfig = workingSetConfig?.clone() ?: return
     if (newWsConfig.dsMasks.add(dsMask)) {
@@ -64,6 +88,9 @@ class GlobalWorkingSet(
     }
   }
 
+  /**
+   * removes mask from the GlobalWorkingSet
+   */
   override fun removeMask(dsMask: DSMask) {
     val newWsConfig = workingSetConfig?.clone() ?: return
     if (newWsConfig.dsMasks.remove(dsMask)) {
@@ -71,9 +98,15 @@ class GlobalWorkingSet(
     }
   }
 
+  /**
+   * uss paths of the GLobalWorkingSet
+   */
   override val ussPaths: Collection<UssPath>
     get() = lock.withLock { workingSetConfig?.ussPaths ?: listOf() }
 
+  /**
+   * adds uss path to the GlobalWorkingSet
+   */
   override fun addUssPath(ussPath: UssPath) {
     val newWsConfig = workingSetConfig?.clone() ?: return
     if (newWsConfig.ussPaths.add(ussPath)) {
@@ -81,6 +114,9 @@ class GlobalWorkingSet(
     }
   }
 
+  /**
+   * removes uss path from the GlobalWorkingSet
+   */
   override fun removeUssPath(ussPath: UssPath) {
     val newWsConfig = workingSetConfig?.clone() ?: return
     if (newWsConfig.ussPaths.remove(ussPath)) {

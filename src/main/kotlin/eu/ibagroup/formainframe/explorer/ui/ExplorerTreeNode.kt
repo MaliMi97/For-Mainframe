@@ -32,6 +32,11 @@ abstract class ExplorerTreeNode<Value : Any>(
     treeStructure.registerNode(this)
   }
 
+  /**
+   * is null if virtualFile is null
+   *
+   * else is OpenFileDescriptor(project, virtualFile)
+   */
   private val descriptor: OpenFileDescriptor?
     get() {
       return OpenFileDescriptor(notNullProject, virtualFile ?: return null)
@@ -43,10 +48,18 @@ abstract class ExplorerTreeNode<Value : Any>(
 
   val notNullProject = project
 
+  /**
+   * returns treeStructure (ExplorerTreeStructureBase)
+   */
   override fun getSettings(): ViewSettings {
     return treeStructure
   }
 
+  /**
+   * NOT SURE
+   *
+   * open editor and navigate to the virtual file
+   */
   override fun navigate(requestFocus: Boolean) {
     val file = virtualFile ?: return
     descriptor?.let {
@@ -105,14 +118,23 @@ abstract class ExplorerTreeNode<Value : Any>(
     }
   }
 
+  /**
+   * checks whether navigation is supported
+   */
   override fun canNavigate(): Boolean {
     return descriptor?.canNavigate() ?: super.canNavigate()
   }
 
+  /**
+   * checks whether navigation to source is supported
+   */
   override fun canNavigateToSource(): Boolean {
     return descriptor?.canNavigateToSource() ?: super.canNavigateToSource()
   }
 
+  /**
+   * a list of paths to all parents and this node
+   */
   private val pathList: List<ExplorerTreeNode<*>>
     get() = if (parent != null) {
       parent.pathList + this
@@ -120,6 +142,9 @@ abstract class ExplorerTreeNode<Value : Any>(
       listOf(this)
     }
 
+  /**
+   * path to this node
+   */
   val path: TreePath
     get() = TreePath(pathList.toTypedArray())
 

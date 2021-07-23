@@ -5,6 +5,9 @@ import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vfs.VirtualFileManager
 import eu.ibagroup.formainframe.dataops.DataOpsManager
 
+/**
+ * implementation class for the virtualFileSystem extension point
+ */
 class MFVirtualFileSystem : VirtualFileSystemModelWrapper<MFVirtualFile, MFVirtualFileSystemModel>(
   MFVirtualFile::class.java,
   MFVirtualFileSystemModel()
@@ -20,7 +23,7 @@ class MFVirtualFileSystem : VirtualFileSystemModelWrapper<MFVirtualFile, MFVirtu
     val instance: MFVirtualFileSystem
       get() = VirtualFileManager.getInstance().getFileSystem(PROTOCOL) as MFVirtualFileSystem
 
-    @JvmStatic
+              @JvmStatic
     val model
       get() = instance.model
   }

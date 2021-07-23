@@ -9,6 +9,9 @@ import eu.ibagroup.formainframe.utils.validation.validateForBlank
 import eu.ibagroup.formainframe.utils.validation.validateMemberName
 import javax.swing.JComponent
 
+/**
+ * dialog for adding member to a dataset
+ */
 class AddMemberDialog(project: Project?, override var state: MemberAllocationParams) : DialogWrapper(project),
   StatefulComponent<MemberAllocationParams> {
 

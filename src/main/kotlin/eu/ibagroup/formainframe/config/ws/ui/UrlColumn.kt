@@ -8,10 +8,17 @@ import javax.swing.JTable
 import javax.swing.table.TableCellRenderer
 
 @Suppress("DialogTitleCapitalization")
+/**
+ * The z/OSMF url column in the WSTableModel class.
+ * Members of this column are the z/OSMF urls (ConnectionUrlColumn class) in ConncectionsTableModel.
+ */
 class UrlColumn(
   private val getUrl: (WorkingSetConfig) -> String?
 ) : ColumnInfo<WorkingSetConfig, String>(message("configurable.ws.tables.ws.url.name")) {
 
+  /**
+   * returns the name of the column
+   */
   override fun valueOf(item: WorkingSetConfig): String {
     return getUrl(item) ?: message("configurable.ws.tables.ws.url.error.empty")
   }

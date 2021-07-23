@@ -27,6 +27,9 @@ import javax.swing.JTable
 import javax.swing.table.TableCellEditor
 import kotlin.streams.toList
 
+/**
+ * this classed is sued to create the panel, which appears after add or edit function
+ */
 class WorkingSetDialog(
   crudable: Crudable,
   override var state: WorkingSetDialogState
@@ -43,6 +46,9 @@ class WorkingSetDialog(
     disposable
   ).apply { rowHeight = DEFAULT_ROW_HEIGHT }
 
+  /**
+   * the panel, which appears after add or edit function
+   */
   private val panel by lazy {
     panel {
       row {
@@ -116,6 +122,9 @@ class WorkingSetDialog(
     }
   }
 
+  /**
+   * checks whether there are duplicates in the table
+   */
   private fun hasDuplicatesInTable(tableElements: List<WorkingSetDialogState.TableRow>): Boolean {
     
     return tableElements.size != tableElements.map {it.mask}.distinct().size

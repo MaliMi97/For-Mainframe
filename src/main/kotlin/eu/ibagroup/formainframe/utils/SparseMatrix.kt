@@ -1,5 +1,10 @@
 package eu.ibagroup.formainframe.utils
 
+/**
+ * map which returns defaultValue when the item is null
+ *
+ * defaultValue is null unless specified
+ */
 class SparseMatrix<T>(
   private val defaultValue: T? = null,
 ) : ObjectMatrix<T> {
@@ -14,6 +19,9 @@ class SparseMatrix<T>(
     map[Pair(i, j)] = value
   }
 
+  /**
+   * returns Map of not null items
+   */
   @Suppress("UNCHECKED_CAST")
   val asMap: Map<Pair<Int, Int>, T>
     get() = map.filter { it.value != null } as Map<Pair<Int, Int>, T>

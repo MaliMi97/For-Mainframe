@@ -22,6 +22,9 @@ import javax.swing.JComboBox
 import javax.swing.JComponent
 import javax.swing.JTextField
 
+/**
+ * dialog for allocating dataset to work set
+ */
 class AllocationDialog(project: Project?, override var state: DatasetAllocationParams) :
   StatefulDialog<DatasetAllocationParams>(project = project) {
 

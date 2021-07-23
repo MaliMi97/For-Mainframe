@@ -7,6 +7,9 @@ import eu.ibagroup.formainframe.config.ws.WorkingSetConfig
 import eu.ibagroup.formainframe.utils.crudable.Crudable
 import eu.ibagroup.formainframe.utils.crudable.annotations.Contains
 
+/**
+ * used in fetch, update and reset functions of ConnectionConfigurable and WSConfigurable
+ */
 interface ConfigSandbox {
 
   companion object {
@@ -36,6 +39,9 @@ interface ConfigSandbox {
 
 }
 
+/**
+ * stores connections and work sets
+ */
 val sandboxCrudable get() = ConfigSandbox.instance.crudable
 
 inline fun <reified T : Any> applySandbox() {

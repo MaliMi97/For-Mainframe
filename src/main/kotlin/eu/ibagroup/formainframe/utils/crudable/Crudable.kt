@@ -6,10 +6,16 @@ import eu.ibagroup.formainframe.utils.nullable
 import java.util.stream.Stream
 import kotlin.reflect.KProperty
 
+/**
+ * not used code
+ */
 inline fun <reified E> Crudable.deleteByUniqueKey(uniqueKey: Any): E? {
   return this.deleteByUniqueKey(E::class.java, uniqueKey).nullable
 }
 
+/**
+ * not used code
+ */
 inline fun <reified E> Crudable.deleteIf(noinline predicate: (E) -> Boolean): Stream<E> {
   return this.deleteIf(E::class.java, predicate)
 }
@@ -22,10 +28,16 @@ inline fun <reified E> Crudable.getAll(): Stream<E> {
   return this.getAll(E::class.java)
 }
 
+/**
+ * not used code
+ */
 inline fun <reified E, V : Any> Crudable.getByColumnValue(columnName: String, columnValue: V): Stream<E> {
   return this.getByColumnValue(E::class.java, columnName, columnValue)
 }
 
+/**
+ * not used code
+ */
 inline fun <reified E, V : Any> Crudable.getByColumnValue(columnProperty: KProperty<V>, columnValue: V): Stream<E> {
   val columnName = columnProperty.annotations
     .find { it == Column::class.java }
@@ -46,10 +58,16 @@ inline fun <reified E> Crudable.getByUniqueKey(uniqueKey: Any): E? {
   return this.getByUniqueKey(E::class.java, uniqueKey).nullable
 }
 
+/**
+ * not used code
+ */
 fun getUniqueValue(row: Any): Any? {
   return Crudable.getUniqueValueForRow(row).nullable
 }
 
+/**
+ * not used code
+ */
 inline fun <reified E> Crudable.isColumnPresented(row: Any, crossinline lambdaGetter: (E) -> Any): Boolean {
   return row.castOrNull<E>()?.let { castedRow ->
     this.getByColumnLambda(castedRow) { lambdaGetter(it) == lambdaGetter(castedRow) }.findAny().isPresent
@@ -64,6 +82,9 @@ inline fun <reified E : Any, reified F : Any> Crudable.getByForeignKey(row: E): 
   return this.getByForeignKey(row, F::class.java).nullable
 }
 
+/**
+ * not used code
+ */
 inline fun <reified E : Any> Crudable.applyMergedCollections(mergedCollections: MergedCollections<E>) {
   this.applyMergedCollections(E::class.java, mergedCollections)
 }

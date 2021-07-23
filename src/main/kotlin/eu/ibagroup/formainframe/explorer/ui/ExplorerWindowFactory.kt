@@ -7,12 +7,22 @@ import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
 
+/**
+ * factory class for ToolWindow extension
+ * creates the For Mainframe explorer tool window
+ */
 class ExplorerWindowFactory : ToolWindowFactory, DumbAware {
 
+  /**
+   * needs to return true for the explorer tool window to function
+   */
   override fun isApplicable(project: Project): Boolean {
     return true
   }
 
+  /**
+   * creates the content of the For Mainframe explorer tool window
+   */
   override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
     val contentFactory = ContentFactory.SERVICE.getInstance()
     val factory = service<ExplorerContent>()
@@ -21,8 +31,14 @@ class ExplorerWindowFactory : ToolWindowFactory, DumbAware {
     toolWindow.contentManager.addContent(content)
   }
 
+  /**
+   * NOT USED FUNCTION
+   */
   override fun init(toolWindow: ToolWindow) {}
 
+  /**
+   * eeds to return true for the explorer tool window to function
+   */
   override fun shouldBeAvailable(project: Project): Boolean {
     return true
   }
