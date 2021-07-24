@@ -1,6 +1,5 @@
 import org.jetbrains.intellij.tasks.PatchPluginXmlTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.net.URI
 
 plugins {
   id("org.jetbrains.intellij") version "0.6.5"
@@ -43,9 +42,10 @@ dependencies {
   implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.3")
   implementation("org.jgrapht:jgrapht-core:1.5.0")
   implementation("eu.ibagroup:r2z:1.0.2")
-  implementation("io.mockk:mockk:1.10.2")
-  implementation("org.mock-server:mockserver-netty:5.11.1")
-  testImplementation("junit", "junit", "4.12")
+  testImplementation("io.mockk:mockk:1.10.2")
+  testImplementation("org.mock-server:mockserver-netty:5.11.1")
+  //testImplementation("junit", "junit", "4.12")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
 }
 
 intellij {
@@ -68,3 +68,18 @@ tasks.getByName<PatchPluginXmlTask>("patchPluginXml") {
       </ul>"""
   )
 }
+
+sourceSets {
+  create("apiTest") {
+    compileClasspath += sourceSets.main.get().output
+    runtimeClasspath += sourceSets.main.get().output
+    java.srcDirs("src/apiTest/java", "src/apiTest/kotlin")
+    resources.srcDirs("src/apiTest/resources")
+  }
+}
+
+val apiTestImplementation by configurations.getting {
+  extendsFrom(configurations.testImplementation.get())
+}
+
+configurations["apiTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
