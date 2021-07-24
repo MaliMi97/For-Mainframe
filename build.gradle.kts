@@ -83,3 +83,13 @@ val apiTestImplementation by configurations.getting {
 }
 
 configurations["apiTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
+
+val apiTest = task<Test>("apiTest") {
+  description = "Runs integration tests for API."
+  group = "verification"
+  testClassesDirs = sourceSets["apiTest"].output.classesDirs
+  classpath = sourceSets["apiTest"].runtimeClasspath
+  testLogging {
+    events("passed", "skipped", "failed")
+  }
+}
