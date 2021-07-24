@@ -58,7 +58,7 @@ class mockserverTest: BasePlatformTestCase()  {
         val conTab = ConnectionsTableModel(sandboxCrudable)
         conTab.onAdd(configCrudable,state)
         // set credentials
-        CredentialService.instance.setCredentials(state.connectionConfig.uuid,state.username,state.password)
+        //CredentialService.instance.setCredentials(state.connectionConfig.uuid,state.username,state.password)
         // add work set to the connection
         val config = WorkingSetConfig(uuid = "a", name = "a", connectionConfigUuid = state.connectionUuid,
             dsMasks = mutableListOf(), ussPaths = mutableListOf())
