@@ -8,15 +8,8 @@ on:
     branches: [ GHactions ]
 
 jobs:
-  set-up:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - run: chmod +x src/apiTest/resources/mockServer/startmockserver.sh
-      - run: ./src/apiTest/resources/mockServer/startmockserver.sh
   build:
     runs-on: ubuntu-latest
-    needs: set-up
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -24,6 +17,10 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
+    - name: start mockserver
+      run: |
+        chmod +x src/apiTest/resources/mockServer/startmockserver.sh
+        ./src/apiTest/resources/mockServer/startmockserver.sh &
     - name: Restore gradle wrapper
       run: gradle wrapper --gradle-version 6.8.1
     - name: Grant execute permission for gradlew
@@ -34,9 +31,6 @@ jobs:
       run: ./gradlew test
     - name: run API tests
       run: ./gradlew apiTest
-
-
-
 
 
 
