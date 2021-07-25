@@ -8,6 +8,12 @@ on:
     branches: [ GHactions ]
 
 jobs:
+  set_up:
+    runs-on: ubuntu-latest
+    steps:
+      - run: cd src/apiTest/resources/mockServer
+      - run: chmod +x startmockserver.sh
+      - run: ./startmockserver.sh
   build:
     runs-on: ubuntu-latest
     steps:
