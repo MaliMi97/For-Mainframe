@@ -44,8 +44,9 @@ dependencies {
   implementation("eu.ibagroup:r2z:1.0.2")
   testImplementation("io.mockk:mockk:1.10.2")
   testImplementation("org.mock-server:mockserver-netty:5.11.1")
-  //testImplementation("junit", "junit", "4.12")
+  testImplementation("junit", "junit", "4.12")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-api:5.7.1")
 }
 
 intellij {
@@ -69,6 +70,13 @@ tasks.getByName<PatchPluginXmlTask>("patchPluginXml") {
   )
 }
 
+tasks.test {
+  useJUnit()
+  testLogging {
+    events("passed", "skipped", "failed")
+  }
+}
+
 sourceSets {
   create("apiTest") {
     compileClasspath += sourceSets.main.get().output
@@ -85,7 +93,7 @@ val apiTestImplementation by configurations.getting {
 configurations["apiTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
 
 val apiTest = task<Test>("apiTest") {
-  description = "Runs integration tests for API."
+  description = "Runs the integration tests for API."
   group = "verification"
   testClassesDirs = sourceSets["apiTest"].output.classesDirs
   classpath = sourceSets["apiTest"].runtimeClasspath

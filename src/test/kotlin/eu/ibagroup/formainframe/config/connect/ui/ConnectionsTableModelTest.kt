@@ -7,33 +7,31 @@ import eu.ibagroup.formainframe.config.ConfigSandboxImpl
 import eu.ibagroup.formainframe.config.connect.ConnectionConfig
 import eu.ibagroup.formainframe.utils.crudable.nextUniqueValue
 import io.mockk.spyk
+import junit.framework.TestCase
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-internal class ConnectionsTableModelTest {
+class ConnectionsTableModelTest: TestCase() {
 
     val app = spyk(MockApplication(Disposer.newDisposable("")))
     val sandbox = ConfigSandboxImpl()
     val tab = ConnectionsTableModel(sandbox.crudable)
     val state = ConnectionDialogState(connectionName = "a", connectionUrl = "https://a.com", username = "a", password = "a")
 
-    @Test
-    fun fetch() {
+    fun testFetch() {
         ApplicationManager.setApplication(app,Disposer.newDisposable(""))
         tab.addRow(state)
         assertEquals(mutableListOf(state),tab.fetch(sandbox.crudable))
     }
 
-    @Test
-    fun onAdd1() {
+    fun testOnAdd1() {
         ApplicationManager.setApplication(app,Disposer.newDisposable(""))
         tab.onAdd(sandbox.crudable, state)
         assertEquals(mutableListOf(state),tab.fetch(sandbox.crudable))
     }
 
-    @Test
-    fun onAdd2() {
+    fun testOnAdd2() {
         ApplicationManager.setApplication(app,Disposer.newDisposable(""))
         val state2 = ConnectionDialogState(connectionName = "b", connectionUrl = "https://b.com", username = "b", password = "b")
         tab.onAdd(sandbox.crudable, state)
@@ -41,16 +39,14 @@ internal class ConnectionsTableModelTest {
         assertEquals(mutableListOf(state,state2),tab.fetch(sandbox.crudable))
     }
 
-    @Test
-    fun onDelete() {
+    fun testOnDelete() {
         ApplicationManager.setApplication(app,Disposer.newDisposable(""))
         tab.onAdd(sandbox.crudable, state)
         tab.onDelete(sandbox.crudable, state)
         assertEquals(mutableListOf<ConnectionDialogState>(),tab.fetch(sandbox.crudable))
     }
 
-    @Test
-    fun set1() {
+    fun testSet1() {
         ApplicationManager.setApplication(app,Disposer.newDisposable(""))
         tab.addRow(state)
         state.connectionName = "b"
