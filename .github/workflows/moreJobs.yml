@@ -32,7 +32,9 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: gradle-artifact
-          path: build
+          path: |
+            build
+            gradle
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
