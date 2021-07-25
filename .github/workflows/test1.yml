@@ -29,13 +29,13 @@ jobs:
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
-   - name: Cache Gradle packages
-     uses: actions/cache@v2
-     with:
-       key: "build cache"
-       path: |
-         ~/.gradle/caches
-         ~/.gradle/wrapper
+    - name: Cache Gradle packages
+      uses: actions/cache@v2
+      with:
+        key: "build cache"
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
     - name: run unit test
       run: ./gradlew :test
   
