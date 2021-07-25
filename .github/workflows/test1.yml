@@ -9,9 +9,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -19,35 +17,36 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-#    - name: Setup Kotlin
-#      uses: fwilhe2/setup-kotlin@1.4
-#      with:
-#        version: 1.4.30
     - name: Restore gradle wrapper
-      run: gradle wrapper
+      run: gradle wrapper --gradle-version 6.8.1
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Cache Gradle packages
-      uses: actions/cache@v2
-      with:
-        key: "build cache"
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-    - name: run unit test
-      run: ./gradlew :test
-  
-  unit:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: restore gradle cache
-        uses: actions/cache@v2
-        with:
-          key: "build cache"
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-      - run: ./gradlew :test
+    - name: run unit tests
+      run: ./gradlew test
+    - name: run API tests
+      run: ./gradlew apiTest
+
+
+
+
+
+
+
+
+
+#    - name: Setup Kotlin
+#      uses: fwilhe2/setup-kotlin@1.4
+#      with:
+#        version: 1.4.30
+
+
+
+#    - name: Cache Gradle packages
+#      uses: actions/cache@v2
+#      with:
+#        key: "build cache"
+#        path: |
+#          ~/.gradle/caches
+#          ~/.gradle/wrapper
