@@ -23,6 +23,8 @@ jobs:
 #      uses: fwilhe2/setup-kotlin@1.4
 #      with:
 #        version: 1.4.30
+    - name: Restore gradle wrapper
+      run: gradle wrapper
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle
