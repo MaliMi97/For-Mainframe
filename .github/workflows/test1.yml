@@ -31,6 +31,8 @@ jobs:
         ./src/apiTest/resources/mockServer/startmockserver.sh &
     - name: run API tests
       run: ./gradlew apiTest
+    - name: stop mockserver
+      run: pkill startmockserver
 
 
 
