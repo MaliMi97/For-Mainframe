@@ -1,0 +1,85 @@
+name: test2
+on:
+  push:
+    branches: [ GHactions ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Restore gradle wrapper
+        run: gradle wrapper --gradle-version 6.8.1
+      - name: cache gradle
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Build with Gradle
+        run: ./gradlew build
+      - name: upload gradle
+      - uses: actions/upload-artifact@v2
+      with:
+        name: gradle-artifact
+        path: |
+          build
+          gradle
+      - name: Cleanup Gradle Cache
+        run: |
+          rm -f ~/.gradle/caches/modules-2/modules-2.lock
+          rm -f ~/.gradle/caches/modules-2/gc.properties
+
+  unit:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: download gradle
+      - uses: actions/download-artifact@v2
+        with:
+          name: gradle-artifact
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: run unit tests
+        run: ./gradlew test
+
+  api:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: download gradle
+      - uses: actions/download-artifact@v2
+      with:
+        name: gradle-artifact
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: start mockserver
+        run: |
+          chmod +x src/apiTest/resources/mockServer/startmockserver.sh
+          ./src/apiTest/resources/mockServer/startmockserver.sh &
+      - name: run API tests
+        run: ./gradlew apiTest
+      - name: stop mockserver
+        run: pkill startmockserver
