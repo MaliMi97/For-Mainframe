@@ -34,27 +34,27 @@ class dummyAPItest: BasePlatformTestCase() {
         return client.send(request, HttpResponse.BodyHandlers.ofString()).body()
     }
 
-//    fun testWithMockServerInShell() {
-//        val port = 8080
-//        val host = "127.0.0.1"
-//        val path = "/hello/world"
-//        MockServerClient(host, port).`when`(
-//            request().withMethod("GET").withPath(path)
-//        ).respond(
-//            response().withBody("Hello World!")
-//        )
-//        var received: String
-//        try {
-//            received = callServer("http://$host:$port$path")
-//        } catch (e: Exception) {
-//            throw RuntimeException(e)
-//        }
-//        MockServerClient(host, port).verify(
-//            request().withPath(path),
-//            VerificationTimes.atLeast(1)
-//        )
-//        TestCase.assertEquals(received, "Hello World!")
-//    }
+    fun testWithMockServerInShell() {
+        val port = 8080
+        val host = "127.0.0.1"
+        val path = "/hello/world"
+        MockServerClient(host, port).`when`(
+            request().withMethod("GET").withPath(path)
+        ).respond(
+            response().withBody("Hello World!")
+        )
+        var received: String
+        try {
+            received = callServer("http://$host:$port$path")
+        } catch (e: Exception) {
+            throw RuntimeException(e)
+        }
+        MockServerClient(host, port).verify(
+            request().withPath(path),
+            VerificationTimes.atLeast(1)
+        )
+        TestCase.assertEquals(received, "Hello World!")
+    }
 
     fun testWithMockServerInTest() {
         val port = PortFactory.findFreePort()
