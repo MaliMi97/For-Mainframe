@@ -19,11 +19,11 @@ class dummyAPItest: BasePlatformTestCase() {
 
     override fun getTestDataPath() = System.getProperty("user.dir") + getBasePath()
 
-//    fun testWithoutMockServer() {
-//        myFixture.copyFileToProject("dummyAPI.txt")
-//        myFixture.checkResultByFile("dummyAPI.txt","dummyAPI.txt",true)
-//
-//    }
+    fun testWithoutMockServer() {
+        myFixture.copyFileToProject("dummyAPI.txt")
+        myFixture.checkResultByFile("dummyAPI.txt","dummyAPI.txt",true)
+
+    }
 
     fun callServer(uri: String): String {
         val client = HttpClient.newHttpClient()
