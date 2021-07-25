@@ -8,14 +8,16 @@ on:
     branches: [ GHactions ]
 
 jobs:
-  set_up:
+  set-up:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - run: cd src/apiTest/resources/mockServer
       - run: chmod +x startmockserver.sh
       - run: ./startmockserver.sh
   build:
     runs-on: ubuntu-latest
+    needs: set-up
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
