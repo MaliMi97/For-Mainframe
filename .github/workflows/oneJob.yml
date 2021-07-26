@@ -6,40 +6,42 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '${GITHUB_WORKFLOW}')"
+#    if: "contains(github.event.head_commit.message, '${GITHUB_WORKFLOW}')"
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-    - name: Restore gradle wrapper
-      run: gradle wrapper --gradle-version 6.8.1
-    - name: Grant execute permission for gradlew
-      run: chmod +x gradlew
-    - name: cache gradle
-      uses: actions/cache@v2
-      with:
-        path: |
-          ~/.gradle/caches
-          ~/.gradle/wrapper
-        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-        restore-keys: |
-          ${{ runner.os }}-gradle-
-    - name: Build with Gradle
-      run: ./gradlew build
-    - name: run unit tests
-      run: ./gradlew test
-    - name: start mockserver
-      run: |
-        chmod +x src/apiTest/resources/mockServer/startmockserver.sh
-        ./src/apiTest/resources/mockServer/startmockserver.sh &
-    - name: run API tests
-      run: ./gradlew apiTest
-    - name: stop mockserver
-      run: pkill startmockserver
-    - name: Cleanup Gradle Cache
-      run: |
-        rm -f ~/.gradle/caches/modules-2/modules-2.lock
-        rm -f ~/.gradle/caches/modules-2/gc.properties
+    - run: echo '${GITHUB_WORKFLOW}'
+    - run: echo '${{GITHUB_WORKFLOW}}'
+#    - uses: actions/checkout@v2
+#    - name: Set up JDK 11
+#      uses: actions/setup-java@v2
+#      with:
+#        java-version: '11'
+#        distribution: 'adopt'
+#    - name: Restore gradle wrapper
+#      run: gradle wrapper --gradle-version 6.8.1
+#    - name: Grant execute permission for gradlew
+#      run: chmod +x gradlew
+#    - name: cache gradle
+#      uses: actions/cache@v2
+#      with:
+#        path: |
+#          ~/.gradle/caches
+#          ~/.gradle/wrapper
+#        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+#        restore-keys: |
+#          ${{ runner.os }}-gradle-
+#    - name: Build with Gradle
+#      run: ./gradlew build
+#    - name: run unit tests
+#      run: ./gradlew test
+#    - name: start mockserver
+#      run: |
+#        chmod +x src/apiTest/resources/mockServer/startmockserver.sh
+#        ./src/apiTest/resources/mockServer/startmockserver.sh &
+#    - name: run API tests
+#      run: ./gradlew apiTest
+#    - name: stop mockserver
+#      run: pkill startmockserver
+#    - name: Cleanup Gradle Cache
+#      run: |
+#        rm -f ~/.gradle/caches/modules-2/modules-2.lock
+#        rm -f ~/.gradle/caches/modules-2/gc.properties
