@@ -1,7 +1,7 @@
 name: test1
 on:
   push:
-    branches: [ michal ]
+    branches: [ GHactions ]
 
 jobs:
   build:

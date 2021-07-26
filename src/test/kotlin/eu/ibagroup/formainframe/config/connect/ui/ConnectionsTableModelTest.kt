@@ -23,6 +23,7 @@ class ConnectionsTableModelTest: TestCase() {
         ApplicationManager.setApplication(app,Disposer.newDisposable(""))
         tab.addRow(state)
         assertEquals(mutableListOf(state),tab.fetch(sandbox.crudable))
+        assertTrue(false)
     }
 
     fun testOnAdd1() {
