@@ -4,8 +4,15 @@ on:
     branches: [ GHactions ]
 
 jobs:
+  skip-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: saulmaldonado/skip-workflow@v1.1.0
+        with:
+          phrase:  "[skip $GITHUB_WORKFLOW]"
   build:
     runs-on: ubuntu-latest
+    needs: skip-workflow
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
