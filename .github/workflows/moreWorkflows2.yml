@@ -1,8 +1,8 @@
-name: moreWorkflows-2
+name: moreWorkflows2
 on:
   workflow_run:
     workflows:
-      - moreWorkflows-1
+      - moreWorkflows1
     types:
       - completed
 
@@ -16,7 +16,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v2
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
-          workflow: moreWorkflows-1.yml
+          workflow: moreWorkflows1.yml
           name: gradle-artifact-w
       - name: start mockserver
         run: |

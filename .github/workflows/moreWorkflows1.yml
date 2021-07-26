@@ -1,4 +1,4 @@
-name: moreWorkflows-1
+name: moreWorkflows1
 on:
   push:
     branches: [ GHactions ]
