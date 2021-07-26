@@ -6,7 +6,10 @@ on:
 jobs:
   skip-workflow:
     runs-on: ubuntu-latest
+    outputs:
+      skip: ${{ steps.skip-workflow.outputs.skip }}
     steps:
+      - uses: actions/checkout@v2
       - uses: saulmaldonado/skip-workflow@v1.1.0
         with:
           phrase:  "[skip $GITHUB_WORKFLOW]"
@@ -14,6 +17,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: skip-workflow
+    if: ${{ !needs.skip-workflow.outputs.skip }}
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
