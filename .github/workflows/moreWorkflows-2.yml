@@ -1,0 +1,27 @@
+name: moreWorkflows-2
+on:
+  workflow_run:
+    workflows: ["moreWorkflows-2"]
+    bbranches: [GHactions]
+    types:
+      - completed
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download artifact
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: moreWorkflows-1.yml
+          name: gradle-artifact-w
+      - name: start mockserver
+        run: |
+          chmod +x src/apiTest/resources/mockServer/startmockserver.sh
+          ./src/apiTest/resources/mockServer/startmockserver.sh &
+      - name: run API tests
+        run: ./gradlew apiTest
+      - name: stop mockserver
+        run: pkill startmockserver
