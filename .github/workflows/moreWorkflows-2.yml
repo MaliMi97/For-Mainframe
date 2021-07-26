@@ -1,8 +1,8 @@
 name: moreWorkflows-2
 on:
   workflow_run:
-    workflows: [moreWorkflows-1]
-    branches: [GHactions]
+    workflows:
+      - moreWorkflows-1
     types:
       - completed
 
