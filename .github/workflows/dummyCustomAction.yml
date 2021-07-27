@@ -1,5 +1,7 @@
 name: dummy
-on: [push]
+on:
+  push:
+    branches: [michal]
 
 jobs:
   dummy_job:

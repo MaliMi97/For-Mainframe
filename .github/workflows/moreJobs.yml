@@ -1,7 +1,7 @@
 name: moreJobs
 on:
   push:
-    branches: [ GHactions ]
+    branches: [ michal ]
 
 jobs:
   build:
