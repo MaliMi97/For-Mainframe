@@ -1,7 +1,6 @@
 name: uploadGradle
 on:
   workflow_dispatch:
-    branches: [GHactions]
 
 jobs:
   build_and_upload:
