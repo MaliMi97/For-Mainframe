@@ -4,11 +4,11 @@ on: [push]
 jobs:
   dummy_job:
     runs-on: ubuntu-latest
-    name: A job to say hello
+    name: test_dummy_action
     steps:
       - name: dummy action step
         id: dum
-        uses: MaliMi97/dummy-action@v1
+        uses: MaliMi97/dummy-action
         with:
           who-to-greet: 'Dummy!'
       - name: Get the output time
