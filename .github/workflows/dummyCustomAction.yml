@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: dummy action step
         id: dum
-        uses: MaliMi97/dummy-action
+        uses: MaliMi97/dummy-action@v1
         with:
           who-to-greet: 'Dummy!'
       - name: Get the output time
