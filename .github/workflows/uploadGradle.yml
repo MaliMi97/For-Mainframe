@@ -1,5 +1,7 @@
 name: uploadGradle
 on:
+  push:
+    branches: [GHactions]
   workflow_dispatch:
 
 jobs:
