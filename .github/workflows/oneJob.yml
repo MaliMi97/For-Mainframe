@@ -31,7 +31,7 @@ jobs:
     - name: run unit tests
       run: ./gradlew test
     - name: start mockserver
-      uses: MaliMi97/mock-server-action@v1
+      uses: MaliMi97/mock-server-action@v0.1
 #      run: |
 #        chmod +x src/apiTest/resources/mockServer/startmockserver.sh
 #        ./src/apiTest/resources/mockServer/startmockserver.sh &
