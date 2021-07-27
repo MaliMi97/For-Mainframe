@@ -1,7 +1,7 @@
 name: uploadGradle
 on:
   schedule:
-    - cron: "50 11 * * *"
+    - cron: "55 11 * * *"
 
 jobs:
   build_and_upload:
