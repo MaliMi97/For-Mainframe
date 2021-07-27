@@ -1,8 +1,8 @@
 name: uploadGradle
 on:
-  push:
-    branches: [GHactions]
   workflow_dispatch:
+      tags:
+        description: 'Upload Gradle as an artifact'
 
 jobs:
   build_and_upload:
