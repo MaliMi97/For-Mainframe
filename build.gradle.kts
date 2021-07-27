@@ -46,7 +46,7 @@ dependencies {
   testImplementation("org.mock-server:mockserver-netty:5.11.1")
   testImplementation("junit", "junit", "4.12")
   testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.1")
-  testRuntimeOnly("org.junit.jupiter:junit-jupiter-api:5.7.1")
+  testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
   testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.7.1")
 }
 

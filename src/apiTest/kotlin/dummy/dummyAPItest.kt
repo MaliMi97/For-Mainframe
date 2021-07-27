@@ -22,7 +22,6 @@ class dummyAPItest: BasePlatformTestCase() {
     fun testWithoutMockServer() {
         myFixture.copyFileToProject("dummyAPI.txt")
         myFixture.checkResultByFile("dummyAPI.txt","dummyAPI.txt",true)
-
     }
 
     fun callServer(uri: String): String {
