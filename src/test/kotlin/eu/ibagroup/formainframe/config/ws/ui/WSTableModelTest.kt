@@ -81,4 +81,9 @@ internal class WSTableModelTest {
         assertEquals(config2.ussPaths,aux.ussPaths)
         //assertEquals(config2.uuid,aux.uuid)
     }
+
+    @Test
+    fun needToRebuildGradleQuestionMark() {
+        assertTrue(true)
+    }
 }
