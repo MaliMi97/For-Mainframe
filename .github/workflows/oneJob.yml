@@ -30,15 +30,15 @@ jobs:
         ./gradlew build
     - name: run unit tests
       run: ./gradlew test
-   - name: start mockserver
-     uses: MaliMi97/mock-server-action@v1
-#      run: |
-#        chmod +x src/apiTest/resources/mockServer/startmockserver.sh
-#        ./src/apiTest/resources/mockServer/startmockserver.sh &
-    - name: run API tests
-      run: ./gradlew apiTest
-#    - name: stop mockserver
-#      run: pkill startmockserver
+#   - name: start mockserver
+#     uses: MaliMi97/mock-server-action@v1
+##      run: |
+##        chmod +x src/apiTest/resources/mockServer/startmockserver.sh
+##        ./src/apiTest/resources/mockServer/startmockserver.sh &
+#    - name: run API tests
+#      run: ./gradlew apiTest
+##    - name: stop mockserver
+##      run: pkill startmockserver
     - name: Cleanup Gradle Cache
       run: |
         rm -f ~/.gradle/caches/modules-2/modules-2.lock
