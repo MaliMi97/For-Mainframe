@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-#    if: "contains(github.event.head_commit.message, '[oneJob]')"
+    if: "contains(github.event.head_commit.message, 'oneJob')"
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -31,8 +31,7 @@ jobs:
         ./gradlew build
     - name: run unit tests
       run: ./gradlew test
-    - name: start mockserver
-      uses: MaliMi97/mock-server-action@v0.1
+#    - name: start mockserver
 #      run: |
 #        chmod +x src/apiTest/resources/mockServer/startmockserver.sh
 #        ./src/apiTest/resources/mockServer/startmockserver.sh &
@@ -44,3 +43,11 @@ jobs:
       run: |
         rm -f ~/.gradle/caches/modules-2/modules-2.lock
         rm -f ~/.gradle/caches/modules-2/gc.properties
+
+  mock_server:
+    runs-on: ubuntu-latest
+    steps:
+      - name: start mockserver
+        run: |
+          chmod +x src/apiTest/resources/mockServer/startmockserver.sh
+          ./src/apiTest/resources/mockServer/startmockserver.sh
