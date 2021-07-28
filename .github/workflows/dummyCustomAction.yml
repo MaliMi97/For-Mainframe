@@ -1,7 +1,7 @@
 name: dummy
 on:
   push:
-    branches: [michal]
+    branches: [GHactions]
 
 jobs:
   dummy_job:
