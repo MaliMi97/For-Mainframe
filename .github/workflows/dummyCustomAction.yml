@@ -15,3 +15,9 @@ jobs:
           who-to-greet: 'Dummy!'
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.time }}"
+  kotlin_dummy_job:
+      runs-on: ubuntu-latest
+      name: test_kotlin_dummy_action
+      steps:
+        - uses: MaliMi97/kotlinDummyAction@v1
+
