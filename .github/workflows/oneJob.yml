@@ -2,6 +2,7 @@ name: oneJob
 on:
   push:
     branches: [ GHactions ]
+  workflow_dispatch:
 
 jobs:
   build:
