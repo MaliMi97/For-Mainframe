@@ -47,6 +47,7 @@ jobs:
   mock_server:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: start mockserver
         run: |
           chmod +x src/apiTest/resources/mockServer/startmockserver.sh
