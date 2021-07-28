@@ -2,6 +2,7 @@ name: dummy
 on:
   push:
     branches: [GHactions]
+  workflow_dispatch:
 
 jobs:
   dummy_job:
