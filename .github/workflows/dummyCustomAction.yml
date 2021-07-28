@@ -21,4 +21,6 @@ jobs:
       name: test_kotlin_dummy_action
       steps:
         - uses: MaliMi97/kotlinDummyAction@v1
+          with:
+            who-to-greet: 'Dummy!'
 
