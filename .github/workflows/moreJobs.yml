@@ -2,11 +2,12 @@ name: moreJobs
 on:
   push:
     branches: [ michal ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, '[moreJobs]')"
+    if: "contains(github.event.head_commit.message, 'moreJobs')"
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -28,13 +29,6 @@ jobs:
           gradle wrapper --gradle-version 6.8.1
           chmod +x gradlew
           ./gradlew build
-      - name: upload gradle
-        uses: actions/upload-artifact@v2
-        with:
-          name: gradle-artifact
-          path: |
-            build
-            gradle
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
@@ -45,10 +39,15 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v2
-      - name: download gradle
-        uses: actions/download-artifact@v2
+      - name: cache gradle
+        uses: MaliMi97/cache@vNoUpload
         with:
-          name: gradle-artifact
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: run unit tests
         run: ./gradlew test
 
@@ -57,10 +56,15 @@ jobs:
     needs: build
     steps:
       - uses: actions/checkout@v2
-      - name: download gradle
-        uses: actions/download-artifact@v2
+      - name: cache gradle
+        uses: MaliMi97/cache@vNoUpload
         with:
-          name: gradle-artifact
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
       - name: start mockserver
         run: |
           chmod +x src/apiTest/resources/mockServer/startmockserver.sh
