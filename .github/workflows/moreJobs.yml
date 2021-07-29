@@ -48,6 +48,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      - name: Build with Gradle
+        run: |
+          gradle wrapper --gradle-version 6.8.1
+          chmod +x gradlew
+          ./gradlew build
       - name: run unit tests
         run: ./gradlew test
 
@@ -65,6 +70,11 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
+      - name: Build with Gradle
+        run: |
+          gradle wrapper --gradle-version 6.8.1
+          chmod +x gradlew
+          ./gradlew build
       - name: start mockserver
         run: |
           chmod +x src/apiTest/resources/mockServer/startmockserver.sh
