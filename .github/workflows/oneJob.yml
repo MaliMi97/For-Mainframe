@@ -25,10 +25,11 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-gradle-
     - name: Build with Gradle
-      run: |
-        gradle wrapper --gradle-version 6.8.1
-        chmod +x gradlew
-        ./gradlew build
+      uses: MaliMi97/gradle-build@v1
+#       run: |
+#         gradle wrapper --gradle-version 6.8.1
+#         chmod +x gradlew
+#         ./gradlew build
     - name: run unit tests
       run: ./gradlew test
     - name: start mockserver
