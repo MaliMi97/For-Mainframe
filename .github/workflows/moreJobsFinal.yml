@@ -1,4 +1,4 @@
-name: oneJob
+name: moreJobsFinal
 on:
   push:
     branches: [ GHactions ]
