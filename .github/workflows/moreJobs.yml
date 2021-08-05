@@ -28,7 +28,7 @@ jobs:
         run: |
           gradle wrapper --gradle-version 6.8.1
           chmod +x gradlew
-          ./gradlew build
+          ./gradlew build -x test
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
@@ -52,7 +52,7 @@ jobs:
         run: |
           gradle wrapper --gradle-version 6.8.1
           chmod +x gradlew
-          ./gradlew build
+          ./gradlew build -x test
       - name: run unit tests
         run: ./gradlew test
 
@@ -74,7 +74,7 @@ jobs:
         run: |
           gradle wrapper --gradle-version 6.8.1
           chmod +x gradlew
-          ./gradlew build
+          ./gradlew build -x test
       - name: start mockserver
         run: |
           chmod +x src/apiTest/resources/mockServer/startmockserver.sh
