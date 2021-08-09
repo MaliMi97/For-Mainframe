@@ -63,7 +63,7 @@ class WorkingSetDialog(
           }
       }
       row {
-        label("Specify connection")
+        label("Specify settings.connection")
         comboBox(
           model = connectionComboBoxModel,
           modelBinding = PropertyBinding(
@@ -84,7 +84,7 @@ class WorkingSetDialog(
           renderer = SimpleListCellRenderer.create("") { it?.name }
         ).withValidationOnApply {
           if (it.selectedItem == null) {
-            ValidationInfo("You must provide a connection", it)
+            ValidationInfo("You must provide a settings.connection", it)
           } else {
             null
           }

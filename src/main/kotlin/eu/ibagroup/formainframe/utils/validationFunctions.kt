@@ -26,7 +26,7 @@ fun validateConnectionName(component: JTextField, ignoreValue: String? = null, c
     ignoreValue != it.name && it.name == component.text.trim()
   }.count() > 0
   return if (configAlreadyExists) {
-    ValidationInfo("You must provide unique connection name. Connection ${component.text} already exists.", component)
+    ValidationInfo("You must provide unique settings.connection name. Connection ${component.text} already exists.", component)
   } else {
     null
   }

@@ -27,23 +27,23 @@ To start using the plugin:
 "For Mainframe" is an IntelliJ plugin dedicated to facilitate working with z/OS datasets through providing a possibility to work with them in the IDE.
 
 ## Getting started
-After installing plugin into your IDE from marketplace, the first thing you need to do is to create a connection and a working set.
-Create, edit and delete a connection
+After installing plugin into your IDE from marketplace, the first thing you need to do is to create a settings.connection and a working set.
+Create, edit and delete a settings.connection
 
-### Create, edit and delete a connection
-To create a connection press the "wrench" pictogram on the right side of your screen, or go to "Settings" (CTRL+ALT+S) and select "For Mainframe" on the left side of the panel.
+### Create, edit and delete a settings.connection
+To create a settings.connection press the "wrench" pictogram on the right side of your screen, or go to "Settings" (CTRL+ALT+S) and select "For Mainframe" on the left side of the panel.
 
 In "Settings" switch to "z/OSMF connections" tab and press "+" at the bottom of the panel. A new panel "Add Connection" will appear.
 
-Enter your desired connection name, connection URL, username and password into corresponding fields. The plugin provides a possibility to accept self-signed SSL-certificates, so check this box if necessary. Press "OK" when you're done. If the connection is created successfully you'll see it in the list in "Settings" and in the list on the right side of your screen after you've closed "Settings".
+Enter your desired settings.connection name, settings.connection URL, username and password into corresponding fields. The plugin provides a possibility to accept self-signed SSL-certificates, so check this box if necessary. Press "OK" when you're done. If the settings.connection is created successfully you'll see it in the list in "Settings" and in the list on the right side of your screen after you've closed "Settings".
 
-You can edit the connection in "Settings" by clicking on it and then on the "pencil" pictogram at the bottom of the panel.
+You can edit the settings.connection in "Settings" by clicking on it and then on the "pencil" pictogram at the bottom of the panel.
 
-You can delete working sets in "Settings" by clicking on the connection you'd like to delete and pressing "-" at the bottom of the panel.
+You can delete working sets in "Settings" by clicking on the settings.connection you'd like to delete and pressing "-" at the bottom of the panel.
 ### Create, edit and delete a working set
 To add a working set press on the "wrench" pictogram on the right side of your screen, or go to "Settings" (CTRL+ALT+S) and select "For Mainframe" on the left side of the panel.
 
-In "Settings" switch to "Working Sets" tab and press "+" at the bottom of the panel. A new panel "Add Working Set" will appear. In it you should enter your desired working set name, specify the existing connection, and add one or more data set masks. Press "OK" when you're done. You will see your newly connected working set in the list in "Settings" and on the right side of your screen after you've closed "Settings".
+In "Settings" switch to "Working Sets" tab and press "+" at the bottom of the panel. A new panel "Add Working Set" will appear. In it you should enter your desired working set name, specify the existing settings.connection, and add one or more data set masks. Press "OK" when you're done. You will see your newly connected working set in the list in "Settings" and on the right side of your screen after you've closed "Settings".
 
 You can edit working sets in "Settings" by clicking on the desired set and then on the "pencil" pictogram at the bottom of the panel.
 

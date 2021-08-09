@@ -29,7 +29,7 @@ class ZosmfApiImpl : ZosmfApi {
   override fun <Api : Any> getApi(apiClass: Class<out Api>, connectionConfig: ConnectionConfig): Api {
     val urlConnection = configCrudable
       .getByForeignKey<ConnectionConfig, UrlConnection>(connectionConfig)
-      ?: throw RuntimeException("Cannot find url for connection ${connectionConfig.name}")
+      ?: throw RuntimeException("Cannot find url for settings.connection ${connectionConfig.name}")
     return getApi(apiClass, urlConnection.url, urlConnection.isAllowSelfSigned)
   }
 

@@ -1,72 +1,54 @@
 package eu.ibagroup.formainframe.config.connect.ui
 
-import com.intellij.mock.MockApplication
-import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.util.Disposer
 import eu.ibagroup.formainframe.config.ConfigSandboxImpl
-import eu.ibagroup.formainframe.config.connect.ConnectionConfig
-import eu.ibagroup.formainframe.utils.crudable.nextUniqueValue
-import io.mockk.spyk
-import junit.framework.TestCase
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.Test
+import eu.ibagroup.formainframe.config.SettingsUnitTestCase
+import kotlin.test.assertNotEquals
 
-class ConnectionsTableModelTest: TestCase() {
-
-    val app = spyk(MockApplication(Disposer.newDisposable("")))
+class ConnectionsTableModelTest: SettingsUnitTestCase() {
     val sandbox = ConfigSandboxImpl()
-    val tab = ConnectionsTableModel(sandbox.crudable)
-    val state = ConnectionDialogState(connectionName = "a", connectionUrl = "https://a.com", username = "a", password = "a")
+    val conTab = ConnectionsTableModel(sandbox.crudable)
+    val connectionDialogStateA = ConnectionDialogState(connectionName = "a", connectionUrl = "https://a.com", username = "a", password = "a")
+    val connectionDialogStateB = ConnectionDialogState(connectionName = "b", connectionUrl = "https://b.com", username = "b", password = "b")
 
     fun testFetch() {
-        ApplicationManager.setApplication(app,Disposer.newDisposable(""))
-        tab.addRow(state)
-        assertEquals(mutableListOf(state),tab.fetch(sandbox.crudable))
+        conTab.addRow(connectionDialogStateA)
+        assertEquals(mutableListOf(connectionDialogStateA),conTab.fetch(sandbox.crudable))
     }
 
-    fun testOnAdd1() {
-        ApplicationManager.setApplication(app,Disposer.newDisposable(""))
-        tab.onAdd(sandbox.crudable, state)
-        assertEquals(mutableListOf(state),tab.fetch(sandbox.crudable))
+    fun testOnAdd() {
+        conTab.onAdd(sandbox.crudable, connectionDialogStateA)
+        conTab.onAdd(sandbox.crudable, connectionDialogStateB)
+        assertEquals(mutableListOf(connectionDialogStateA,connectionDialogStateB),conTab.fetch(sandbox.crudable))
     }
 
-    fun testOnAdd2() {
-        ApplicationManager.setApplication(app,Disposer.newDisposable(""))
-        val state2 = ConnectionDialogState(connectionName = "b", connectionUrl = "https://b.com", username = "b", password = "b")
-        tab.onAdd(sandbox.crudable, state)
-        tab.onAdd(sandbox.crudable, state2)
-        assertEquals(mutableListOf(state,state2),tab.fetch(sandbox.crudable))
+    fun testOnAddExistingName() {
+        val connectionDialogState = ConnectionDialogState(connectionName = connectionDialogStateA.connectionName)
+        conTab.onAdd(sandbox.crudable, connectionDialogStateA)
+        conTab.onAdd(sandbox.crudable, connectionDialogState)
+        assertEquals(mutableListOf(connectionDialogStateA),conTab.fetch(sandbox.crudable))
+    }
+
+    fun testOnAddExistingUrl() {
+        val connectionDialogState = ConnectionDialogState(connectionUrl = connectionDialogStateA.connectionUrl)
+        conTab.onAdd(sandbox.crudable, connectionDialogStateA)
+        conTab.onAdd(sandbox.crudable, connectionDialogState)
+        assertEquals(mutableListOf(connectionDialogStateA,connectionDialogState),conTab.fetch(sandbox.crudable))
     }
 
     fun testOnDelete() {
-        ApplicationManager.setApplication(app,Disposer.newDisposable(""))
-        tab.onAdd(sandbox.crudable, state)
-        tab.onDelete(sandbox.crudable, state)
-        assertEquals(mutableListOf<ConnectionDialogState>(),tab.fetch(sandbox.crudable))
+        conTab.onAdd(sandbox.crudable, connectionDialogStateA)
+        conTab.onDelete(sandbox.crudable, connectionDialogStateA)
+        assertEquals(mutableListOf<ConnectionDialogState>(),conTab.fetch(sandbox.crudable))
     }
 
-    fun testSet1() {
-        ApplicationManager.setApplication(app,Disposer.newDisposable(""))
-        tab.addRow(state)
-        state.connectionName = "b"
-        state.connectionUrl = "https://b.com"
-        state.username = "b"
-        tab[0] = state
-        assertEquals(mutableListOf(state),tab.fetch(sandbox.crudable))
+    fun testSet() {
+        conTab.addRow(ConnectionDialogState())
+        conTab[0] = connectionDialogStateA
+        assertEquals(connectionDialogStateA.connectionName,conTab[0].connectionName)
+        assertEquals(connectionDialogStateA.connectionUrl,conTab[0].connectionUrl)
+        assertEquals(connectionDialogStateA.username,conTab[0].username)
+        assertEquals(connectionDialogStateA.password,conTab[0].password)
+        assertNotEquals(connectionDialogStateA.connectionUuid,conTab[0].connectionUuid)
+        assertNotEquals(connectionDialogStateA.urlConnectionUuid,conTab[0].urlConnectionUuid)
     }
-
-    // this test does not work
-    // for some reason onAdd does not add a row and the index in tab.set is out of bounds
-//    @Test
-//    fun set2() {
-//        ApplicationManager.setApplication(app,Disposer.newDisposable(""))
-//        var state = ConnectionDialogState(connectionUuid = sandbox.crudable.nextUniqueValue<ConnectionConfig, String>(), connectionName = "a", connectionUrl = "https://a.com", username = "a", password = "a")
-//        tab.onAdd(sandbox.crudable,state)
-//        state.connectionName = "b"
-//        state.connectionUrl = "https://b.com"
-//        state.username = "b"
-//        tab.set(0,state)
-//        assertEquals(mutableListOf(state),tab.fetch(sandbox.crudable))
-//    }
 }
