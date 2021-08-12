@@ -1,16 +1,15 @@
-package dummy
-
 import com.intellij.remoterobot.RemoteRobot
 import com.intellij.remoterobot.data.RemoteComponent
 import com.intellij.remoterobot.fixtures.*
 import com.intellij.remoterobot.search.locators.byXpath
-import com.intellij.remoterobot.stepsProcessing.StepLogger
-import com.intellij.remoterobot.stepsProcessing.StepWorker
+import com.intellij.remoterobot.stepsProcessing.step
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.*
+import java.awt.event.KeyEvent
 import java.awt.image.BufferedImage
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -21,38 +20,62 @@ import javax.imageio.ImageIO
 
 @ExtendWith(RemoteRobotExtension::class)
 class SayHelloKotlinTest {
-    init {
-        StepsLogger.init()
-    }
 
+    @Tag("dev")
     @Test
-    fun checkHelloMessage(remoteRobot: RemoteRobot) = with(remoteRobot) {
-        find(WelcomeFrame::class.java, timeout = Duration.ofSeconds(10)).apply {
-            if (hasText("Say Hello")) {
-                findText("Say Hello").click()
-            } else {
-                moreActions.click()
-                heavyWeightPopup.findText("Say Hello").click()
+    fun iii(remoteRobot: RemoteRobot) = with(remoteRobot) {
+        welcomeFrame {
+            openProject.click()
+            dialog("Open File or Project") {
+                findText("untitled").click()
+                button("Ok").click()
             }
+//            createNewProjectLink.click()
+//            dialog("New Project") {
+//                findText("Java").click()
+//                find(
+//                    ComponentFixture::class.java,
+//                    byXpath("//div[@class='FrameworksTree']")
+//                ).findText("Kotlin/JVM").click()
+//                runJs("robot.pressAndReleaseKey(${KeyEvent.VK_SPACE})")
+//                button("Next").click()
+//                button("Finish").click()
+//            }
         }
-
-        val helloDialog = find(HelloWorldDialog::class.java)
-
-        assert(helloDialog.textPane.hasText("Hello World!"))
-        helloDialog.ok.click()
-    }
-
-    @DefaultXpath("title Hello", "//div[@title='Hello' and @class='MyDialog']")
-    class HelloWorldDialog(remoteRobot: RemoteRobot, remoteComponent: RemoteComponent) : ContainerFixture(remoteRobot, remoteComponent) {
-        val textPane: ComponentFixture
-            get() = find(byXpath("//div[@class='JTextPane']"))
-        val ok: ComponentFixture
-            get() = find(byXpath("//div[@class='JButton' and @text='OK']"))
     }
 }
 
+
+fun RemoteRobot.welcomeFrame(function: WelcomeFrame.()-> Unit) {
+    find(WelcomeFrame::class.java, Duration.ofSeconds(10)).apply(function)
+}
+
+@FixtureName("Welcome Frame")
+@DefaultXpath("type", "//div[@class='FlatWelcomeFrame']")
+class WelcomeFrame(remoteRobot: RemoteRobot, remoteComponent: RemoteComponent) : CommonContainerFixture(remoteRobot, remoteComponent) {
+    val openProject
+        get() = actionLink(byXpath("Open Project", "//div[@accessiblename='Open or Import' and @class='JButton']"))
+    val createNewProjectLink
+        get() = actionLink(byXpath("New Project","//div[(@class='MainButton' and @text='New Project') or (@accessiblename='New Project' and @class='JButton')]"))
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class RemoteRobotExtension : AfterTestExecutionCallback, ParameterResolver {
-    private val url: String = System.getProperty("remote-robot-url") ?: "http://127.0.0.1:8082"
+    private val url: String = System.getProperty("remote-robot-url") ?: "http://127.0.0.1:8580"
     private val remoteRobot: RemoteRobot = if (System.getProperty("debug-retrofit")?.equals("enable") == true) {
         val interceptor: HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
             this.level = HttpLoggingInterceptor.Level.BODY
@@ -165,46 +188,27 @@ class RemoteRobotExtension : AfterTestExecutionCallback, ParameterResolver {
         ).inputStream().use {
             ImageIO.read(it)
         }
-    }fun RemoteRobot.welcomeFrame(function: WelcomeFrame.()-> Unit) {
-    find(WelcomeFrame::class.java, Duration.ofSeconds(10)).apply(function)
-}
-
-@FixtureName("Welcome Frame")
-@DefaultXpath("type", "//div[@class='FlatWelcomeFrame']")
-class WelcomeFrame(remoteRobot: RemoteRobot, remoteComponent: RemoteComponent) : CommonContainerFixture(remoteRobot, remoteComponent) {
-    val createNewProjectLink
-        get() = actionLink(byXpath("New Project","//div[(@class='MainButton' and @text='New Project') or (@accessiblename='New Project' and @class='JButton')]"))
-    val moreActions
-        get() = button(byXpath("More Action", "//div[@accessiblename='More Actions']"))
-
-    val heavyWeightPopup
-        get() = remoteRobot.find(ComponentFixture::class.java, byXpath("//div[@class='HeavyWeightWindow']"))
-}
-}
-
-fun RemoteRobot.welcomeFrame(function: WelcomeFrame.()-> Unit) {
-    find(WelcomeFrame::class.java, Duration.ofSeconds(10)).apply(function)
-}
-
-@FixtureName("Welcome Frame")
-@DefaultXpath("type", "//div[@class='FlatWelcomeFrame']")
-class WelcomeFrame(remoteRobot: RemoteRobot, remoteComponent: RemoteComponent) : CommonContainerFixture(remoteRobot, remoteComponent) {
-    val createNewProjectLink
-        get() = actionLink(byXpath("New Project","//div[(@class='MainButton' and @text='New Project') or (@accessiblename='New Project' and @class='JButton')]"))
-    val moreActions
-        get() = button(byXpath("More Action", "//div[@accessiblename='More Actions']"))
-
-    val heavyWeightPopup
-        get() = remoteRobot.find(ComponentFixture::class.java, byXpath("//div[@class='HeavyWeightWindow']"))
-}
-
-object StepsLogger {
-    private var initializaed = false
-    @JvmStatic
-    fun init() = synchronized(initializaed) {
-        if (initializaed.not()) {
-            StepWorker.registerProcessor(StepLogger())
-            initializaed = true
-        }
     }
+}
+
+
+fun ContainerFixture.dialog(
+    title: String,
+    timeout: Duration = Duration.ofSeconds(20),
+    function: DialogFixture.() -> Unit = {}): DialogFixture = step("Search for dialog with title $title") {
+    find<DialogFixture>(DialogFixture.byTitle(title), timeout).apply(function)
+}
+
+@FixtureName("Dialog")
+class DialogFixture(
+    remoteRobot: RemoteRobot,
+    remoteComponent: RemoteComponent) : CommonContainerFixture(remoteRobot, remoteComponent) {
+
+    companion object {
+        @JvmStatic
+        fun byTitle(title: String) = byXpath("title $title", "//div[@title='$title' and @class='MyDialog']")
+    }
+
+    val title: String
+        get() = callJs("component.getTitle();")
 }

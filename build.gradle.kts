@@ -109,8 +109,8 @@ val uiTestImplementation by configurations.getting {
   extendsFrom(configurations.testImplementation.get())
 }
 
-configurations["apiTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
-configurations["uiTestRuntimeOnly"].extendsFrom(configurations.runtimeOnly.get())
+configurations["apiTestRuntimeOnly"].extendsFrom(configurations.testRuntimeOnly.get())
+configurations["uiTestRuntimeOnly"].extendsFrom(configurations.testRuntimeOnly.get())
 
 val apiTest = task<Test>("apiTest") {
   description = "Runs the integration tests for API."
@@ -126,6 +126,7 @@ val uiTest = task<Test>("uiTest") {
   group = "verification"
   testClassesDirs = sourceSets["uiTest"].output.classesDirs
   classpath = sourceSets["uiTest"].runtimeClasspath
+  useJUnitPlatform()
   testLogging {
     events("passed", "skipped", "failed")
   }
@@ -140,8 +141,18 @@ tasks.runIdeForUiTests {
 //    systemProperty "robot-server.host.public", "true"
 //    systemProperty "robot.encryption.enabled", "true"
 //    systemProperty "robot.encryption.password", "my super secret"
-    System.setProperty("robot-server.port", "8082")
-    System.setProperty("ide.mac.message.dialogs.as.sheets", "false")
-    System.setProperty("jb.privacy.policy.text", "<!--999.999-->")
-    System.setProperty("jb.consents.confirmation.enabled", "false")
+
+
+  //this does not work
+//    System.setProperty("robot-server.port", "8082")
+//    System.setProperty("ide.mac.message.dialogs.as.sheets", "false")
+//    System.setProperty("jb.privacy.policy.text", "<!--999.999-->")
+//    System.setProperty("jb.consents.confirmation.enabled", "false")
+}
+
+tasks.register<Test>("dev"){
+  group = "verification"
+  useJUnitPlatform {
+    includeTags("dev")
+  }
 }
