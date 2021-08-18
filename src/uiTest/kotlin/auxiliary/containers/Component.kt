@@ -8,12 +8,13 @@ import com.intellij.remoterobot.RemoteRobot
 import com.intellij.remoterobot.data.RemoteComponent
 import com.intellij.remoterobot.fixtures.CommonContainerFixture
 import com.intellij.remoterobot.fixtures.FixtureName
+import com.intellij.remoterobot.fixtures.JTextFieldFixture
 import com.intellij.remoterobot.search.locators.Locator
 import com.intellij.remoterobot.search.locators.byXpath
 import java.time.Duration
 
 fun RemoteRobot.component(function: Component.() -> Unit) {
-    find<Component>(Component.xPath(), Duration.ofSeconds(60)).apply(function)
+    findAll<Component>(Component.xPath())[1].apply(function)
 }
 
 @FixtureName("Component")
