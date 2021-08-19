@@ -13,6 +13,7 @@ import com.intellij.remoterobot.search.locators.Locator
 import com.intellij.remoterobot.search.locators.byXpath
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Tag
+import java.time.Duration
 
 @Tag("FirstTime")
 @ExtendWith(RemoteRobotExtension::class)
@@ -34,9 +35,11 @@ class ConnectionManager {
                 checkBox("Don't show tips").select()
                 clickButton("Close")
             }
-            component {
-                gotIt()
-            }
+            clickButton(byXpath("//div[@accessiblename='Got It' and @class='JButton' and @text='Got It']"),
+            Duration.ofSeconds(180))
+//            component {
+//                gotIt()
+//            }
             close()
         }
     }

@@ -13,7 +13,7 @@ fun CommonContainerFixture.clickButton(text: String) {
     button.click()
 }
 
-fun CommonContainerFixture.clickButton(locator: Locator) {
+fun CommonContainerFixture.clickButton(locator: Locator, duration: Duration = Duration.ofSeconds(60)) {
     val button = button(locator)
     waitFor(Duration.ofSeconds(60)) {
         button.isEnabled()
