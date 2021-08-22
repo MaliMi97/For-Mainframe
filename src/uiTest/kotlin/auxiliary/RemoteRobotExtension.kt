@@ -17,7 +17,7 @@ import java.lang.reflect.Method
 import javax.imageio.ImageIO
 
 /**
- * this class was copied from ui-robot at jet brains
+ * This class was copied from ui-robot at jet brains. It allows us to open open frames, dialogs etc. in the UI tests.
  */
 class RemoteRobotExtension : AfterTestExecutionCallback, ParameterResolver {
     private val url: String = System.getProperty("remote-robot-url") ?: "http://127.0.0.1:8580"

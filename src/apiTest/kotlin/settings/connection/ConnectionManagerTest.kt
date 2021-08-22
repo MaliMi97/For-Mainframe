@@ -21,10 +21,17 @@ import java.net.UnknownHostException
 import javax.net.ssl.SSLPeerUnverifiedException
 import kotlin.streams.toList
 
+/**
+ * Testnig the connection manager on API level.
+ */
 class ConnectionManagerTest: PluginTestCase() {
 
     private lateinit var conTab: ConnectionsTableModel
     private val conConfig = ConnectionConfigurable()
+
+    /**
+     * For now we have only worked with real connection. Please fill in your own.
+     */
     private val conState = ConnectionDialogState(
         connectionName = "testConnection",
         connectionUrl = "https://zzow03.zowe.marist.cloud:10443/",
@@ -39,6 +46,9 @@ class ConnectionManagerTest: PluginTestCase() {
         conTab = ConnectionsTableModel(sandboxCrudable)
     }
 
+    /**
+     * There is a need to eliminate all rows in the ConnectionTableModel after each test
+     */
     override fun tearDown() {
         for (item in conTab.fetch(sandboxCrudable)) {
             conTab.onDelete(sandboxCrudable,item)
@@ -46,6 +56,9 @@ class ConnectionManagerTest: PluginTestCase() {
         super.tearDown()
     }
 
+    /**
+     * The function checking whether the sandboxCrudable is modified accrodingly
+     */
     fun assertCrudable(connectionDialogStateList: List<ConnectionDialogState>) {
         var conConfigSet = emptySet<ConnectionConfig>()
         var creSet = emptyList<Credentials>()
@@ -57,6 +70,10 @@ class ConnectionManagerTest: PluginTestCase() {
         TestCase.assertEquals(creSet,sandboxCrudable.getAll<Credentials>().toList())
     }
 
+    /**
+     * testing the onAdd method of ConnectionTableModel on API level,
+     * meaning checking whether the sandboxCrudable is modified accrodingly
+     */
     fun testOnAdd() {
         conTab.onAdd(sandboxCrudable, conStateA)
         conTab.onAdd(sandboxCrudable, conStateB)
@@ -71,6 +88,9 @@ class ConnectionManagerTest: PluginTestCase() {
         assertCrudable(listOf())
     }
 
+    /**
+     * Tests what happens to the sandboxCrudable if two connections with the same name are added.
+     */
     fun testOnAddExistingName() {
         val connectionDialogState = ConnectionDialogState(connectionName = conStateA.connectionName)
         conTab.onAdd(sandboxCrudable, conStateA)
@@ -82,6 +102,9 @@ class ConnectionManagerTest: PluginTestCase() {
         assertCrudable(listOf())
     }
 
+    /**
+     * Tests what happens to the sandboxCrudable if two connections with the same url are added.
+     */
     fun testOnAddExistingUrl() {
         val connectionDialogState = ConnectionDialogState(connectionUrl = conStateA.connectionUrl)
         conTab.onAdd(sandboxCrudable, conStateA)
@@ -97,22 +120,9 @@ class ConnectionManagerTest: PluginTestCase() {
         assertCrudable(listOf())
     }
 
-    fun testSet() {
-        conTab.addRow(conStateA)
-        conTab.onAdd(sandboxCrudable,conStateA)
-        conConfig.apply()
-        conTab[0] = conStateB
-        conConfig.apply()
-        assertEquals(conStateB.connectionName,conTab[0].connectionName)
-        assertEquals(conStateB.connectionUrl,conTab[0].connectionUrl)
-        assertEquals(conStateB.username,conTab[0].username)
-        assertEquals(conStateB.password,conTab[0].password)
-        assertNotEquals(conStateB.connectionUuid,conTab[0].connectionUuid)
-        assertNotEquals(conStateB.connectionConfig.url,conTab[0].connectionConfig.url)
-        assertCrudable(listOf(conStateB))
-    }
-
-
+    /**
+     * Tests some connection errors that might happen on API level.
+     */
     fun testConnectionErrors() {
         assertNoThrowable { service<DataOpsManager>().performOperation(InfoOperation(conState.connectionConfig.url, conState.isAllowSsl)) }
         val unknownHostException = org.junit.jupiter.api.assertThrows<UnknownHostException> {

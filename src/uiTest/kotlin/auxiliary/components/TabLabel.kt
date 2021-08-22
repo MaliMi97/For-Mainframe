@@ -7,6 +7,9 @@ import com.intellij.remoterobot.fixtures.FixtureName
 import com.intellij.remoterobot.search.locators.byXpath
 import com.intellij.remoterobot.utils.waitFor
 
+/**
+ * Function, which looks for the TabLabel.
+ */
 fun RemoteRobot.tabLabel(remoteRobot: RemoteRobot, name: String): TabLabel {
     val xpath = byXpath("$name", "//div[@accessiblename='$name' and @class='TabLabel']")
     waitFor {
@@ -15,5 +18,8 @@ fun RemoteRobot.tabLabel(remoteRobot: RemoteRobot, name: String): TabLabel {
     return findAll<TabLabel>(xpath).first()
 }
 
+/**
+ * This class represents the TabLAbel.
+ */
 @FixtureName("TabLabel")
 class TabLabel(remoteRobot: RemoteRobot, remoteComponent: RemoteComponent) : ComponentFixture(remoteRobot, remoteComponent)

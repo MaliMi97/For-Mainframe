@@ -7,6 +7,9 @@ import com.intellij.remoterobot.fixtures.FixtureName
 import com.intellij.remoterobot.search.locators.byXpath
 import com.intellij.remoterobot.utils.waitFor
 
+/**
+ * Function, which looks for the ActionMenu.
+ */
 fun RemoteRobot.actionMenu(remoteRobot: RemoteRobot, text: String): ActionMenuFixture {
     val xpath = byXpath("text '$text'", "//div[@class='ActionMenu' and @text='$text']")
     waitFor {
@@ -16,7 +19,9 @@ fun RemoteRobot.actionMenu(remoteRobot: RemoteRobot, text: String): ActionMenuFi
 }
 
 /**
- * this class was copied from ui-robot at jet brains
+ * This class was copied from ui-robot at jet brains
+ *
+ * It represents the ActionMenu
  */
 @FixtureName("ActionMenu")
 class ActionMenuFixture(remoteRobot: RemoteRobot, remoteComponent: RemoteComponent) : ComponentFixture(remoteRobot, remoteComponent)

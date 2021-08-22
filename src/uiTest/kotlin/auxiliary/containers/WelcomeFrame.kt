@@ -9,15 +9,25 @@ import com.intellij.remoterobot.fixtures.FixtureName
 import com.intellij.remoterobot.search.locators.byXpath
 import java.time.Duration
 
+/**
+ * Finds the Welcome Frame and modifies the fixtureStack.
+ */
 fun RemoteRobot.welcomeFrame(function: WelcomeFrame.()-> Unit) {
     find(WelcomeFrame::class.java, Duration.ofSeconds(60)).apply(function)
 }
 
+/**
+ * Class representing the Welcome Frame.
+ */
 @FixtureName("Welcome Frame")
 @DefaultXpath("type","//div[@class='FlatWelcomeFrame']")
 class WelcomeFrame(remoteRobot: RemoteRobot, remoteComponent: RemoteComponent) : CommonContainerFixture(remoteRobot, remoteComponent) {
     val openProject
         get() = actionLink(byXpath("Open Project", "//div[(@accessiblename='Open or Import' and @class='JButton') or (@class='MainButton' and @text='Open')]"))
+
+    /**
+     * Opens project with projectName, which is located in the resources of the uiTest source set.
+     */
     fun open(projectName: String) {
         openProject.click()
         dialog("Open File or Project") {

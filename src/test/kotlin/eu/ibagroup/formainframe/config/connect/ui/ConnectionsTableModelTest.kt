@@ -1,30 +1,33 @@
 package eu.ibagroup.formainframe.config.connect.ui
 
-import com.intellij.mock.MockApplication
-import com.intellij.openapi.application.ApplicationManager
-import com.intellij.openapi.util.Disposer
 import eu.ibagroup.formainframe.config.ConfigSandboxImpl
 import eu.ibagroup.formainframe.config.UnitTestCase
-import io.mockk.spyk
-import org.junit.Before
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
-import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import kotlin.test.assertNotEquals
 
+/**
+ * Testing a class, which only needs the existence of an Application to function properly
+ */
 class ConnectionsTableModelTest: UnitTestCase() {
     val sandbox = ConfigSandboxImpl()
     val conTab = ConnectionsTableModel(sandbox.crudable)
     val connectionDialogStateA = ConnectionDialogState(connectionName = "a", connectionUrl = "https://a.com", username = "a", password = "a")
     val connectionDialogStateB = ConnectionDialogState(connectionName = "b", connectionUrl = "https://b.com", username = "b", password = "b")
 
+    /**
+     * tests the fetch method of ConnectionTableModel
+     */
     @Test
     fun fetch() {
         conTab.addRow(connectionDialogStateA)
         assertEquals(mutableListOf(connectionDialogStateA),conTab.fetch(sandbox.crudable))
     }
 
+    /**
+     * tests the onAdd method of ConnectionTableModel
+     */
     @Test
     fun onAdd() {
         conTab.onAdd(sandbox.crudable, connectionDialogStateA)
@@ -32,6 +35,10 @@ class ConnectionsTableModelTest: UnitTestCase() {
         assertEquals(mutableListOf(connectionDialogStateA,connectionDialogStateB),conTab.fetch(sandbox.crudable))
     }
 
+    /**
+     * Tests what happens to the ConnectionTableModel if we try to add two connections of the same name.
+     * Should return only one connection.
+     */
     @Test
     fun onAddExistingName() {
         val connectionDialogState = ConnectionDialogState(connectionName = connectionDialogStateA.connectionName)
@@ -40,6 +47,9 @@ class ConnectionsTableModelTest: UnitTestCase() {
         assertEquals(mutableListOf(connectionDialogStateA),conTab.fetch(sandbox.crudable))
     }
 
+    /**
+     * Tests what happens to the ConnectionTableModel if we try to add two connections with the same url.
+     */
     @Test
     fun onAddExistingUrl() {
         val connectionDialogState = ConnectionDialogState(connectionUrl = connectionDialogStateA.connectionUrl)
@@ -48,6 +58,9 @@ class ConnectionsTableModelTest: UnitTestCase() {
         assertEquals(mutableListOf(connectionDialogStateA,connectionDialogState),conTab.fetch(sandbox.crudable))
     }
 
+    /**
+     * Tests the onDelete method of ConnectionTableModel.
+     */
     @Test
     fun onDelete() {
         conTab.onAdd(sandbox.crudable, connectionDialogStateA)
@@ -55,6 +68,9 @@ class ConnectionsTableModelTest: UnitTestCase() {
         assertEquals(mutableListOf<ConnectionDialogState>(),conTab.fetch(sandbox.crudable))
     }
 
+    /**
+     * Tests the set method of ConnectionTableModel.
+     */
     @Test
     fun set() {
         conTab.addRow(ConnectionDialogState())
@@ -66,6 +82,9 @@ class ConnectionsTableModelTest: UnitTestCase() {
         assertNotEquals(connectionDialogStateA.connectionUuid,conTab[0].connectionUuid)
     }
 
+    /**
+     * A test that should fail. Will need the failure to check what happens in GitHub Actions once test fails.
+     */
     @Test
     fun shouldFail() {
         assertTrue(false)

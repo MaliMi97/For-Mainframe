@@ -9,6 +9,9 @@ import com.intellij.remoterobot.search.locators.byXpath
 import com.intellij.remoterobot.stepsProcessing.step
 import java.time.Duration
 
+/**
+ * Finds a dialog. Not CLOSABLE in tear-down method!!!
+ */
 fun ContainerFixture.dialog(
     title: String,
     timeout: Duration = Duration.ofSeconds(20),
@@ -16,12 +19,18 @@ fun ContainerFixture.dialog(
     find<Dialog>(Dialog.byTitle(title), timeout).apply(function)
 }
 
+/**
+ * Class representing a dialog. Not CLOSABLE in tear-down method!!!
+ */
 @FixtureName("Dialog")
 class Dialog(
     remoteRobot: RemoteRobot,
     remoteComponent: RemoteComponent) : CommonContainerFixture(remoteRobot, remoteComponent) {
 
     companion object {
+        /**
+         * Returns the xPath of the dialog depending on its title.
+         */
         @JvmStatic
         fun byTitle(title: String) = byXpath("title $title", "//div[@title='$title' and @class='MyDialog']")
     }

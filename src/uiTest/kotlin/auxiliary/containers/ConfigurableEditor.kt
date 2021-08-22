@@ -11,18 +11,34 @@ import com.intellij.remoterobot.search.locators.Locator
 import com.intellij.remoterobot.search.locators.byXpath
 import java.time.Duration
 
+/**
+ * Calls the Configurable Editor, which is the For Mainframe section in the Settings Dialog.
+ */
 fun RemoteRobot.configurableEditor(function: ConfigurableEditor.() -> Unit) {
     find<ConfigurableEditor>(ConfigurableEditor.xPath(), Duration.ofSeconds(60)).apply(function)
 }
 
+/**
+ * The representation of the Configurable Editor, which is the For Mainframe section in the Settings Dialog.
+ */
 @FixtureName("ConfigurableEditor")
 class ConfigurableEditor(remoteRobot: RemoteRobot, remoteComponent: RemoteComponent) : CommonContainerFixture(remoteRobot, remoteComponent) {
+    /**
+     * The connection table
+     */
     val conTab = remoteRobot.tabLabel(remoteRobot, "z/OSMF Connections")
-    fun add(closableFixtureCollector: ClosableFixtureCollector, stack: List<Locator>) {
+
+    /**
+     * Clicks on the add action and adds the Add Connection Dialog to the list of fixtures needed to close.
+     */
+    fun add(closableFixtureCollector: ClosableFixtureCollector, fixtureStack: List<Locator>) {
         clickActionButton(byXpath("//div[@accessiblename='Add' and @class='ActionButton' and @myaction='Add (Add)']"))
-        closableFixtureCollector.add(AddConnectionDialog.xPath(), stack)
+        closableFixtureCollector.add(AddConnectionDialog.xPath(), fixtureStack)
     }
     companion object {
+        /**
+         * Returns the xPath of the Configurable Editor.
+         */
         @JvmStatic
         fun xPath() = byXpath("//div[@class='ConfigurableEditor']")
     }

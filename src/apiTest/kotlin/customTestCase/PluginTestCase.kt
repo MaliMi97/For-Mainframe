@@ -7,6 +7,11 @@ import eu.ibagroup.formainframe.analytics.AnalyticsStartupActivity
 import io.mockk.every
 import io.mockk.mockkConstructor
 
+/**
+ * A custom test case for API tests.
+ * This test case modifies the setUp method of BasePlatformTestCase and mocks the license agreement.
+ * The class also overrides the getBasePath and getTestDataPath methods.
+ */
 abstract class PluginTestCase : BasePlatformTestCase() {
 
     override fun setUp() {

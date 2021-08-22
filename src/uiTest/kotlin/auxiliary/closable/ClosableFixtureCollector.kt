@@ -1,16 +1,40 @@
 package auxiliary.closable
 
-import auxiliary.ClosableFixtureItem
 import auxiliary.containers.*
 import com.intellij.remoterobot.RemoteRobot
 import com.intellij.remoterobot.search.locators.Locator
 import java.time.Duration
 
-class ClosableFixtureCollector() {
+/**
+ * The fixture that needs to be closed in the tear-down method.
+ */
+data class ClosableFixtureItem(
+    var name: String,
+    /**
+     * List of all the xPaths of all its closable predecessors.
+     */
+    var fixtureStack: MutableList<Locator>
+)
+
+/**
+ * Class which collects the fixtures that needed to be clsoed in the tear-down method and closes them.
+ */
+class ClosableFixtureCollector {
+    /**
+     * List of the fixtures that needed to be closed in the tear-down method.
+     */
     var items = mutableListOf<ClosableFixtureItem>()
+
+    /**
+     * Adds closable fixture to the list.
+     */
     fun add(xPath: Locator, stack: List<Locator>) {
         items.add(ClosableFixtureItem(xPath.byDescription, (stack + xPath).toMutableList()))
     }
+
+    /**
+     * Finds the closable fixture by its Locator.
+     */
     fun findClosable(remoteRobot: RemoteRobot, locator: Locator) = with(remoteRobot) {
         when(locator.byDescription) {
             SettingsDialog.name -> find<SettingsDialog>(locator, Duration.ofSeconds(60))
@@ -21,9 +45,15 @@ class ClosableFixtureCollector() {
             else -> throw IllegalAccessException("There is no corresponding class to ${locator.byDescription}")
         }
     }
+
+    /**
+     * Closes a single member of the items list.
+     *
+     * Is a recursive function. Should be called with i = 0.
+     */
     fun closeItem(i: Int, item: ClosableFixtureItem, remoteRobot: RemoteRobot) {
-        findClosable(remoteRobot, item.stack[i]).apply {
-            if (i == item.stack.size-1) {
+        findClosable(remoteRobot, item.fixtureStack[i]).apply {
+            if (i == item.fixtureStack.size-1) {
                 close()
                 items.remove(item)
             } else {
@@ -31,6 +61,10 @@ class ClosableFixtureCollector() {
             }
         }
     }
+
+    /**
+     * Closes all closable fixtures, which we want to close.
+     */
     fun closeWantedClosables(wantToClose: List<String>, remoteRobot: RemoteRobot) {
         for (item in items.reversed()) {
             if (item.name in wantToClose) {
@@ -38,6 +72,10 @@ class ClosableFixtureCollector() {
             }
         }
     }
+
+    /**
+     * Closes a single closable fixture by name if it exists.
+     */
     fun closeOnceIfExists(name: String) {
         for (item in items) {
             if (item.name == name) {

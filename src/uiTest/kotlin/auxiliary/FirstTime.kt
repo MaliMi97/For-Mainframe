@@ -15,6 +15,10 @@ import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Tag
 import java.time.Duration
 
+/**
+ * When adding UI tests to GitHub Actions pipeline, there is a need to first run dummy test, which
+ * gets rid of tips and agrees to license agreement.
+ */
 @Tag("FirstTime")
 @ExtendWith(RemoteRobotExtension::class)
 class ConnectionManager {
@@ -37,9 +41,6 @@ class ConnectionManager {
             }
             clickButton(byXpath("//div[@accessiblename='Got It' and @class='JButton' and @text='Got It']"),
             Duration.ofSeconds(180))
-//            component {
-//                gotIt()
-//            }
             close()
         }
     }
