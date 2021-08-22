@@ -6,7 +6,7 @@ on:
 jobs:
   unitAndApi:
     runs-on: ubuntu-latest
-    if: "contains(github.event.head_commit.message, 'oneJob')"
+    if: "contains(github.event.head_commit.message, 'unit api')"
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
@@ -42,6 +42,7 @@ jobs:
           rm -f ~/.gradle/caches/modules-2/gc.properties
   UI:
     runs-on: self-hosted
+    if: "contains(github.event.head_commit.message, 'ui')"
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 11
