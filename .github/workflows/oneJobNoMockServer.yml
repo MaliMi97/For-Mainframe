@@ -33,9 +33,6 @@ jobs:
         if: always()
       - name: Run API Tests
         run: ./gradlew apiTest
-        if: always()
-      - name: Run Ui Tests
-        run: ./src/uiTest/resources/uiTest.sh
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
