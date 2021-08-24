@@ -31,14 +31,14 @@ jobs:
           ./gradlew build -x test
       - name: Run Unit Tests
         run: ./gradlew test
-        if: always()
       - name: Run API Tests
+        if: always()
         run: ./gradlew apiTest
       - name: Cleanup Gradle Cache
         run: |
           rm -f ~/.gradle/caches/modules-2/modules-2.lock
           rm -f ~/.gradle/caches/modules-2/gc.properties
-  UI:
+  ui:
     runs-on: self-hosted
     if: "contains(github.event.head_commit.message, 'ui')"
     steps:
