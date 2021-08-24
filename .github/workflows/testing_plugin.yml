@@ -1,4 +1,4 @@
-name: oneJobNoMockServer
+name: testing_plugin
 on:
   push:
     branches: [ ui ]
