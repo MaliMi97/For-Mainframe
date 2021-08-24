@@ -120,29 +120,5 @@ class ConnectionManagerTest: PluginTestCase() {
         assertCrudable(listOf())
     }
 
-    /**
-     * Tests some connection errors that might happen on API level.
-     */
-    fun testConnectionErrors() {
-        assertNoThrowable { service<DataOpsManager>().performOperation(InfoOperation(conState.connectionConfig.url, conState.isAllowSsl)) }
-        val unknownHostException = org.junit.jupiter.api.assertThrows<UnknownHostException> {
-            service<DataOpsManager>().performOperation(InfoOperation("https://a.com", true))
-        }
-        TestCase.assertEquals("a.com: Name or service not known", unknownHostException.message)
-        val callException = org.junit.jupiter.api.assertThrows<CallException> {
-            service<DataOpsManager>().performOperation(InfoOperation("https://google.com", true))
-        }
-        TestCase.assertEquals("Cannot connect to z/OSMF Server\nCode: 404", callException.message)
-        val sSLPeerUnverifiedException = org.junit.jupiter.api.assertThrows<SSLPeerUnverifiedException> {
-            service<DataOpsManager>().performOperation(InfoOperation(conState.connectionConfig.url, false))
-        }
-        TestCase.assertEquals("""
-              |Hostname zzow03.zowe.marist.cloud not verified:
-              |    certificate: sha256/sNWEKME+51NTSsxHGsS8jTcInUoBNkG0HtBU89C/HRg=
-              |    DN: CN=ZZOW03.ZOWE.MARIST.CLOUD, OU=IZUDFLT, O=IBM
-              |    subjectAltNames: []
-              """.trimMargin(), sSLPeerUnverifiedException.message)
-    }
-
 
 }
