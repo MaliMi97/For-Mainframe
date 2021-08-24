@@ -3,6 +3,7 @@ on:
   push:
     branches: [ ui ]
 
+
 jobs:
   unitAndApi:
     runs-on: ubuntu-latest
