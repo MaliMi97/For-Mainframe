@@ -74,6 +74,9 @@ tasks.getByName<PatchPluginXmlTask>("patchPluginXml") {
   )
 }
 
+/**
+ * Runs unit tests. Uses JUnit
+ */
 tasks.test {
   useJUnitPlatform()
   testLogging {
@@ -81,6 +84,9 @@ tasks.test {
   }
 }
 
+/**
+ * Adds apiTest and uiTest source sets
+ */
 sourceSets {
   create("apiTest") {
     compileClasspath += sourceSets.main.get().output
@@ -96,6 +102,9 @@ sourceSets {
   }
 }
 
+/**
+ * configures the API Tests and UI Tests to inherit the testImplementation in dependencies
+ */
 val apiTestImplementation by configurations.getting {
   extendsFrom(configurations.testImplementation.get())
 }
@@ -103,9 +112,15 @@ val uiTestImplementation by configurations.getting {
   extendsFrom(configurations.testImplementation.get())
 }
 
+/**
+ * configures the API Tests and UI Tests to inherit the testRuntimeOnly in dependencies
+ */
 configurations["apiTestRuntimeOnly"].extendsFrom(configurations.testRuntimeOnly.get())
 configurations["uiTestRuntimeOnly"].extendsFrom(configurations.testRuntimeOnly.get())
 
+/**
+ * runs API tests
+ */
 val apiTest = task<Test>("apiTest") {
   description = "Runs the integration tests for API."
   group = "verification"
@@ -115,6 +130,10 @@ val apiTest = task<Test>("apiTest") {
     events("passed", "skipped", "failed")
   }
 }
+
+/**
+ * runs UI tests
+ */
 val uiTest = task<Test>("uiTest") {
   description = "Runs the integration tests for UI."
   group = "verification"
@@ -127,6 +146,10 @@ val uiTest = task<Test>("uiTest") {
     events("passed", "skipped", "failed")
   }
 }
+
+/**
+ * Runs the first UI test, which agrees to the license agreement
+ */
 val firstTimeUiTest = task<Test>("firstTimeUiTest") {
   description = "Gets rid of license agreement, etc."
   group = "verification"
@@ -142,11 +165,4 @@ val firstTimeUiTest = task<Test>("firstTimeUiTest") {
 
 tasks.downloadRobotServerPlugin {
   version = remoteRobotVersion
-}
-
-tasks.register<Test>("dev"){
-  group = "verification"
-  useJUnitPlatform {
-    includeTags("dev")
-  }
 }
