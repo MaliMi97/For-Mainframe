@@ -5,6 +5,7 @@ import auxiliary.closable.ClosableFixtureCollector
 import com.intellij.remoterobot.RemoteRobot
 import com.intellij.remoterobot.data.RemoteComponent
 import com.intellij.remoterobot.fixtures.CommonContainerFixture
+import com.intellij.remoterobot.fixtures.ContainerFixture
 import com.intellij.remoterobot.fixtures.FixtureName
 import com.intellij.remoterobot.search.locators.Locator
 import com.intellij.remoterobot.search.locators.byXpath
@@ -13,7 +14,7 @@ import java.time.Duration
 /**
  * Finds the Explorer and modifies the fixtureStack.
  */
-fun RemoteRobot.explorer(function: Explorer.() -> Unit) {
+fun ContainerFixture.explorer(function: Explorer.() -> Unit) {
     find<Explorer>(Explorer.xPath(), Duration.ofSeconds(60)).apply(function)
 }
 

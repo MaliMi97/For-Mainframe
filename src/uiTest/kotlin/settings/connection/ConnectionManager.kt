@@ -18,7 +18,8 @@ import org.junit.jupiter.api.extension.ExtendWith
 class ConnectionManager {
     private var closableFixtureCollector = ClosableFixtureCollector()
     private var fixtureStack = mutableListOf<Locator>()
-    private val wantToClose = listOf("Settings Dialog", "Add Connection Dialog", "Error Creating Connection Dialog", "Edit Connection Dialog")
+    private val wantToClose = listOf("Settings Dialog", "Add Connection Dialog", "Error Creating Connection Dialog",
+        "Edit Connection Dialog")
     private val projectName = "untitled"
 
     /**

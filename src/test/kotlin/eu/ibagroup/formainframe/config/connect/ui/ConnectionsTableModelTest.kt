@@ -13,8 +13,10 @@ import kotlin.test.assertNotEquals
 class ConnectionsTableModelTest: UnitTestCase() {
     val sandbox = ConfigSandboxImpl()
     val conTab = ConnectionsTableModel(sandbox.crudable)
-    val connectionDialogStateA = ConnectionDialogState(connectionName = "a", connectionUrl = "https://a.com", username = "a", password = "a")
-    val connectionDialogStateB = ConnectionDialogState(connectionName = "b", connectionUrl = "https://b.com", username = "b", password = "b")
+    val connectionDialogStateA = ConnectionDialogState(connectionName = "a", connectionUrl = "https://a.com",
+        username = "a", password = "a")
+    val connectionDialogStateB = ConnectionDialogState(connectionName = "b", connectionUrl = "https://b.com",
+        username = "b", password = "b")
 
     /**
      * tests the fetch method of ConnectionTableModel

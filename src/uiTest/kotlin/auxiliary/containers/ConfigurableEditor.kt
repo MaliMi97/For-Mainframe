@@ -6,6 +6,7 @@ import auxiliary.components.tabLabel
 import com.intellij.remoterobot.RemoteRobot
 import com.intellij.remoterobot.data.RemoteComponent
 import com.intellij.remoterobot.fixtures.CommonContainerFixture
+import com.intellij.remoterobot.fixtures.ContainerFixture
 import com.intellij.remoterobot.fixtures.FixtureName
 import com.intellij.remoterobot.search.locators.Locator
 import com.intellij.remoterobot.search.locators.byXpath
@@ -14,7 +15,7 @@ import java.time.Duration
 /**
  * Calls the Configurable Editor, which is the For Mainframe section in the Settings Dialog.
  */
-fun RemoteRobot.configurableEditor(function: ConfigurableEditor.() -> Unit) {
+fun ContainerFixture.configurableEditor(function: ConfigurableEditor.() -> Unit) {
     find<ConfigurableEditor>(ConfigurableEditor.xPath(), Duration.ofSeconds(60)).apply(function)
 }
 
@@ -26,7 +27,7 @@ class ConfigurableEditor(remoteRobot: RemoteRobot, remoteComponent: RemoteCompon
     /**
      * The connection table
      */
-    val conTab = remoteRobot.tabLabel(remoteRobot, "z/OSMF Connections")
+    val conTab = tabLabel(remoteRobot, "z/OSMF Connections")
 
     /**
      * Clicks on the add action and adds the Add Connection Dialog to the list of fixtures needed to close.

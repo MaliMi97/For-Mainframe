@@ -1,5 +1,6 @@
 package auxiliary
 
+import auxiliary.components.stripeButton
 import com.intellij.remoterobot.fixtures.CommonContainerFixture
 import com.intellij.remoterobot.search.locators.Locator
 import com.intellij.remoterobot.utils.waitFor

@@ -42,7 +42,8 @@ open class AddConnectionDialog(
         connectionTextParams[2].text = username
         textField(byXpath("//div[@class='JPasswordField']")).text = password
         if (ssl) {
-            checkBox(byXpath("//div[@accessiblename='Accept self-signed SSL certificates' and @class='JBCheckBox' and @text='Accept self-signed SSL certificates']"))
+            checkBox(byXpath("//div[@accessiblename='Accept self-signed SSL certificates' " +
+                    "and @class='JBCheckBox' and @text='Accept self-signed SSL certificates']"))
                 .select()
         }
     }

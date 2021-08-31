@@ -144,22 +144,6 @@ tasks.downloadRobotServerPlugin {
   version = remoteRobotVersion
 }
 
-/**
- * TODO ("change port for server IDEA")
- */
-tasks.runIdeForUiTests {
-//    In case your Idea is launched on remote machine you can enable public port and enable encryption of JS calls
-//    systemProperty "robot-server.host.public", "true"
-//    systemProperty "robot.encryption.enabled", "true"
-//    systemProperty "robot.encryption.password", "my super secret"
-
-  //this does not work
-//    System.setProperty("robot-server.port", "8082")
-//    System.setProperty("ide.mac.message.dialogs.as.sheets", "false")
-//    System.setProperty("jb.privacy.policy.text", "<!--999.999-->")
-//    System.setProperty("jb.consents.confirmation.enabled", "false")
-}
-
 tasks.register<Test>("dev"){
   group = "verification"
   useJUnitPlatform {
