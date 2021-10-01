@@ -22,7 +22,6 @@ class ConnectionManager {
         "Edit Connection Dialog")
     private val projectName = "untitled"
 
-
     /**
      * Opens the project and Explorer.
      */
